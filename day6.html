@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 6 — R Visualization</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-toggle" aria-label="Toggle menu">☰</button>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <a href="index.html">Git, R &amp; Unix for Reproducible Science<span>IMCI · University of Idaho</span></a>
+  </div>
+  <nav>
+    <div class="nav-section">Overview</div>
+    <a href="index.html">Home</a>
+    <div class="nav-section">Workshop Days</div>
+    <a href="day1.html">Day 1 — Unix Basics<span class="day-label">Tue Oct 14</span></a>
+    <a href="day2.html">Day 2 — Files &amp; Directories<span class="day-label">Thu Oct 16</span></a>
+    <a href="day3.html">Day 3 — Loops &amp; Scripts<span class="day-label">Tue Oct 21</span></a>
+    <a href="day4.html">Day 4 — Git + Intro to R<span class="day-label">Thu Oct 23</span></a>
+    <a href="day5.html">Day 5 — R Data Structures<span class="day-label">Tue Oct 28</span></a>
+    <a href="day6.html">Day 6 — R Visualization<span class="day-label">Thu Oct 30</span></a>
+  </nav>
+  <div class="sidebar-footer">Tues &amp; Thurs · 3:00–5:30 PST<br>IRIC 352 / Zoom</div>
+</aside>
+
+<div class="main">
+  <header class="page-header">
+    <div class="day-tag">Day 6 · Thursday, October 30</div>
+    <h1>R Visualization</h1>
+    <div class="meta">
+      <span>Dataset: gapminder.csv</span>
+      <span>Goals: base graphics, ggplot2, saving figures, multi-panel plots</span>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">Resources</div>
+      <ul class="link-list">
+        <li><a href="https://swcarpentry.github.io/r-novice-gapminder/08-plot-ggplot2.html" target="_blank">Carpentries: ggplot2</a></li>
+        <li><a href="https://r-graph-gallery.com/best-dataviz-packages.html" target="_blank">R Graph Gallery</a><span class="link-desc">Browse chart types with copy-paste code</span></li>
+        <li><a href="https://nanx.me/ggsci/articles/ggsci.html" target="_blank">ggsci color palettes</a><span class="link-desc">Journal-style color schemes for ggplot2</span></li>
+        <li><a href="https://colorbrewer2.org" target="_blank">ColorBrewer</a><span class="link-desc">Pick sequential and diverging color palettes</span></li>
+        <li><a href="https://www.sthda.com/english/wiki/ggplot2-point-shapes" target="_blank">ggplot2 point shapes</a><span class="link-desc">Reference for shape numbers</span></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Setup</div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="fn">library</span>(ggplot2)
+gap <span class="op">&lt;-</span> <span class="fn">read.csv</span>(<span class="st">"rawdata/gapminder.csv"</span>)</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Base R Plots</div>
+      <p>R has built-in plotting functions. They're quick but limited.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="fn">plot</span>(x <span class="op">=</span> gap<span class="op">$</span>year, gap<span class="op">$</span>lifeExp)
+<span class="fn">plot</span>(x <span class="op">=</span> gap<span class="op">$</span>year, gap<span class="op">$</span>lifeExp,
+     xlab <span class="op">=</span> <span class="st">"Year"</span>, ylab <span class="op">=</span> <span class="st">"Life Expectancy (yrs)"</span>)
+<span class="fn">hist</span>(gap<span class="op">$</span>lifeExp)
+
+<span class="cm"># Saving base R plots is awkward</span>
+<span class="fn">jpeg</span>(<span class="st">"plots/lifeExp_histogram.jpg"</span>)
+<span class="fn">hist</span>(gap<span class="op">$</span>lifeExp, breaks <span class="op">=</span> <span class="nm">30</span>)
+<span class="fn">dev.off</span>()</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">ggplot2 — The Grammar of Graphics</div>
+      <p>ggplot2 builds plots in layers. Every plot starts with data and aesthetics, then adds geoms (geometric objects).</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Start with data — empty canvas</span>
+<span class="fn">ggplot</span>(gap)
+
+<span class="cm"># Add aesthetics (x/y variables)</span>
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> gdpPercap, y <span class="op">=</span> lifeExp))
+
+<span class="cm"># Add a geom layer — now you have points</span>
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> gdpPercap, y <span class="op">=</span> lifeExp)) <span class="op">+</span>
+  <span class="fn">geom_point</span>()
+
+<span class="cm"># Boxplot</span>
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> lifeExp, y <span class="op">=</span> continent)) <span class="op">+</span>
+  <span class="fn">geom_boxplot</span>()</code></pre>
+      </div>
+
+      <div class="callout demo">
+        <div class="callout-title">Challenge 1</div>
+        <p>Use <code>str(gap)</code> to explore the data. Find another variable to plot. Try year vs. lifeExp. Notice the problem with boxplot — fix it with <code>group = year</code> or <code>as.factor(year)</code>.</p>
+      </div>
+
+      <h2>Grouping by Year — Two Fixes</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Fix 1: tell ggplot to group by year</span>
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> year, y <span class="op">=</span> lifeExp, group <span class="op">=</span> year)) <span class="op">+</span>
+  <span class="fn">geom_boxplot</span>()
+
+<span class="cm"># Fix 2: coerce year to a factor</span>
+gap <span class="op">%&gt;%</span>
+  <span class="fn">mutate</span>(year <span class="op">=</span> <span class="fn">as.factor</span>(year)) <span class="op">%&gt;%</span>
+  <span class="fn">ggplot</span>(<span class="fn">aes</span>(x <span class="op">=</span> year, y <span class="op">=</span> lifeExp)) <span class="op">+</span>
+    <span class="fn">geom_boxplot</span>()</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Colors, Sizes, and Shapes</div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Set a fixed color</span>
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> gdpPercap, y <span class="op">=</span> lifeExp)) <span class="op">+</span>
+  <span class="fn">geom_point</span>(color <span class="op">=</span> <span class="st">"blue"</span>, alpha <span class="op">=</span> <span class="nm">0.5</span>)
+
+<span class="cm"># Map color to a variable (inside aes)</span>
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> gdpPercap, y <span class="op">=</span> lifeExp, color <span class="op">=</span> continent)) <span class="op">+</span>
+  <span class="fn">geom_point</span>(alpha <span class="op">=</span> <span class="nm">0.5</span>)
+
+<span class="cm"># ggsci palette (install.packages("ggsci") first)</span>
+<span class="fn">library</span>(ggsci)
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> year, y <span class="op">=</span> lifeExp, group <span class="op">=</span> country, color <span class="op">=</span> continent)) <span class="op">+</span>
+  <span class="fn">geom_line</span>() <span class="op">+</span>
+  <span class="fn">scale_color_aaas</span>()
+
+<span class="cm"># Manual colors (use ColorBrewer to pick)</span>
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> year, y <span class="op">=</span> lifeExp, group <span class="op">=</span> country, color <span class="op">=</span> continent)) <span class="op">+</span>
+  <span class="fn">geom_line</span>() <span class="op">+</span>
+  <span class="fn">scale_color_manual</span>(values <span class="op">=</span> <span class="fn">c</span>(<span class="st">"#4a1486"</span>, <span class="st">"#6a51a3"</span>, <span class="st">"#807dba"</span>, <span class="st">"#9e9ac8"</span>, <span class="st">"#bcbddc"</span>))
+
+<span class="cm"># Shapes and size</span>
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> gdpPercap, y <span class="op">=</span> lifeExp, color <span class="op">=</span> continent, shape <span class="op">=</span> continent)) <span class="op">+</span>
+  <span class="fn">geom_point</span>(alpha <span class="op">=</span> <span class="nm">0.5</span>, size <span class="op">=</span> <span class="nm">2</span>) <span class="op">+</span>
+  <span class="fn">scale_color_nejm</span>()</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Multiple Geom Layers</div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Layer boxplot + jitter</span>
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> lifeExp, y <span class="op">=</span> continent)) <span class="op">+</span>
+  <span class="fn">geom_boxplot</span>(outlier.alpha <span class="op">=</span> <span class="nm">0</span>) <span class="op">+</span>
+  <span class="fn">geom_jitter</span>(alpha <span class="op">=</span> <span class="nm">0.5</span>, height <span class="op">=</span> <span class="nm">0.3</span>, <span class="fn">aes</span>(color <span class="op">=</span> year))
+
+<span class="cm"># Labels and themes</span>
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> lifeExp, y <span class="op">=</span> continent)) <span class="op">+</span>
+  <span class="fn">geom_boxplot</span>(outlier.alpha <span class="op">=</span> <span class="nm">0</span>) <span class="op">+</span>
+  <span class="fn">geom_jitter</span>(alpha <span class="op">=</span> <span class="nm">0.5</span>, height <span class="op">=</span> <span class="nm">0.3</span>, <span class="fn">aes</span>(color <span class="op">=</span> year)) <span class="op">+</span>
+  <span class="fn">labs</span>(x <span class="op">=</span> <span class="st">"Life Expectancy (yrs)"</span>, y <span class="op">=</span> <span class="st">"Continent"</span>, title <span class="op">=</span> <span class="st">"LifeExp by Continent"</span>) <span class="op">+</span>
+  <span class="fn">theme_classic</span>()</code></pre>
+      </div>
+      <div class="callout demo">
+        <div class="callout-title">Practice: try different themes</div>
+        <p>Pick any plot and test <code>theme_bw()</code>, <code>theme_minimal()</code>, <code>theme_classic()</code>, <code>theme_light()</code>. Pick your favorite.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Ask AI to Customize Your Plot <span class="badge ai">AI</span></div>
+      <p>Tweaking ggplot2 details (axis breaks, legend position, margins) is tedious to look up. Ask AI instead — describe exactly what you want.</p>
+      <div class="prompt-box">
+        <div class="prompt-label">Try this prompt in Claude or ChatGPT</div>
+        <button class="prompt-copy" onclick="copyPrompt(this)">Copy prompt</button>
+        <div class="prompt-text">I'm making a ggplot2 plot in R. Here's my current code:
+
+ggplot(gap, aes(x = lifeExp, y = continent)) +
+  geom_boxplot(outlier.alpha = 0) +
+  geom_jitter(alpha = 0.5, height = 0.3, aes(color = year)) +
+  labs(x = "Life Expectancy (yrs)", y = "Continent", title = "LifeExp by Continent") +
+  theme_classic()
+
+Please modify it to:
+1. Set x-axis breaks at every 10 years from 30 to 90
+2. Rotate the y-axis label to be horizontal
+3. Move the legend to the bottom of the plot
+
+Explain what each change does.</div>
+      </div>
+
+      <h2>The Finished Plot with AI Customizations</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>Plot1 <span class="op">&lt;-</span> <span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> lifeExp, y <span class="op">=</span> continent)) <span class="op">+</span>
+  <span class="fn">geom_boxplot</span>(outlier.alpha <span class="op">=</span> <span class="nm">0</span>) <span class="op">+</span>
+  <span class="fn">geom_jitter</span>(alpha <span class="op">=</span> <span class="nm">0.5</span>, height <span class="op">=</span> <span class="nm">0.3</span>, <span class="fn">aes</span>(color <span class="op">=</span> year)) <span class="op">+</span>
+  <span class="fn">scale_x_continuous</span>(breaks <span class="op">=</span> <span class="fn">seq</span>(<span class="nm">30</span>, <span class="nm">90</span>, by <span class="op">=</span> <span class="nm">10</span>), limits <span class="op">=</span> <span class="fn">c</span>(<span class="nm">30</span>, <span class="nm">90</span>)) <span class="op">+</span>
+  <span class="fn">theme</span>(axis.title.y <span class="op">=</span> <span class="fn">element_text</span>(angle <span class="op">=</span> <span class="nm">0</span>, vjust <span class="op">=</span> <span class="nm">0.5</span>)) <span class="op">+</span>
+  <span class="fn">labs</span>(x <span class="op">=</span> <span class="st">"Life Expectancy (yrs)"</span>, y <span class="op">=</span> <span class="st">"Continent"</span>, title <span class="op">=</span> <span class="st">"LifeExp by Continent"</span>) <span class="op">+</span>
+  <span class="fn">theme_classic</span>()
+
+Plot1
+
+<span class="fn">ggsave</span>(Plot1, file <span class="op">=</span> <span class="st">"plots/lifeByContinent.png"</span>, width <span class="op">=</span> <span class="nm">5</span>, height <span class="op">=</span> <span class="nm">5</span>, units <span class="op">=</span> <span class="st">"in"</span>)
+<span class="fn">ggsave</span>(Plot1, file <span class="op">=</span> <span class="st">"plots/lifeByContinent.pdf"</span>, width <span class="op">=</span> <span class="nm">5</span>, height <span class="op">=</span> <span class="nm">5</span>, units <span class="op">=</span> <span class="st">"in"</span>)</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Facets and Multi-Panel Plots</div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Facet wrap — one panel per continent</span>
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> gdpPercap, y <span class="op">=</span> lifeExp, color <span class="op">=</span> continent)) <span class="op">+</span>
+  <span class="fn">geom_point</span>() <span class="op">+</span>
+  <span class="fn">scale_x_log10</span>() <span class="op">+</span>
+  <span class="fn">scale_color_nejm</span>() <span class="op">+</span>
+  <span class="fn">theme_bw</span>() <span class="op">+</span>
+  <span class="fn">facet_wrap</span>(<span class="op">~</span> continent)
+
+<span class="cm"># Use AI to fix the legend position in faceted plots</span>
+<span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> gdpPercap, y <span class="op">=</span> lifeExp, color <span class="op">=</span> continent)) <span class="op">+</span>
+  <span class="fn">geom_point</span>() <span class="op">+</span>
+  <span class="fn">scale_x_log10</span>() <span class="op">+</span>
+  <span class="fn">scale_color_nejm</span>() <span class="op">+</span>
+  <span class="fn">theme_bw</span>() <span class="op">+</span>
+  <span class="fn">facet_wrap</span>(<span class="op">~</span> continent) <span class="op">+</span>
+  <span class="fn">theme</span>(
+    legend.position <span class="op">=</span> <span class="fn">c</span>(<span class="nm">1</span>, <span class="nm">0</span>),
+    legend.justification <span class="op">=</span> <span class="fn">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>),
+    plot.margin <span class="op">=</span> <span class="fn">unit</span>(<span class="fn">c</span>(<span class="nm">5.5</span>, <span class="nm">5.5</span>, <span class="nm">5.5</span>, <span class="nm">5.5</span>), <span class="st">"mm"</span>)
+  )
+
+<span class="cm"># Highlight a specific country with a second geom layer</span>
+dataUS <span class="op">&lt;-</span> gap <span class="op">%&gt;%</span> <span class="fn">filter</span>(country <span class="op">==</span> <span class="st">"United States"</span>)
+
+plot2 <span class="op">&lt;-</span> <span class="fn">ggplot</span>(gap, <span class="fn">aes</span>(x <span class="op">=</span> gdpPercap, y <span class="op">=</span> lifeExp, color <span class="op">=</span> continent)) <span class="op">+</span>
+  <span class="fn">geom_point</span>() <span class="op">+</span>
+  <span class="fn">scale_x_log10</span>() <span class="op">+</span>
+  <span class="fn">facet_wrap</span>(<span class="op">~</span> continent) <span class="op">+</span>
+  <span class="fn">geom_point</span>(data <span class="op">=</span> dataUS, <span class="fn">aes</span>(x <span class="op">=</span> gdpPercap, y <span class="op">=</span> lifeExp), color <span class="op">=</span> <span class="st">"black"</span>)
+
+<span class="fn">ggsave</span>(plot2, file <span class="op">=</span> <span class="st">"plots/LifeGdpFacet.png"</span>, width <span class="op">=</span> <span class="nm">5</span>, height <span class="op">=</span> <span class="nm">5</span>, units <span class="op">=</span> <span class="st">"in"</span>)</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Combining Plots with patchwork</div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="fn">install.packages</span>(<span class="st">"patchwork"</span>)
+<span class="fn">library</span>(patchwork)
+
+multipanel <span class="op">&lt;-</span> Plot1 <span class="op">+</span> plot2
+
+<span class="fn">ggsave</span>(multipanel,
+       file <span class="op">=</span> <span class="st">"plots/combo.png"</span>,
+       width <span class="op">=</span> <span class="nm">8</span>, height <span class="op">=</span> <span class="nm">5</span>, units <span class="op">=</span> <span class="st">"in"</span>)
+<span class="fn">ggsave</span>(multipanel,
+       file <span class="op">=</span> <span class="st">"plots/combo.pdf"</span>,
+       width <span class="op">=</span> <span class="nm">8</span>, height <span class="op">=</span> <span class="nm">5</span>, units <span class="op">=</span> <span class="st">"in"</span>)</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">AI for Plot Customization — Keep Going <span class="badge ai">AI</span></div>
+      <p>At this point, AI is faster than documentation for tweaking plots. Describe what you want in plain English.</p>
+      <div class="prompt-box">
+        <div class="prompt-label">General-purpose ggplot2 customization prompt</div>
+        <button class="prompt-copy" onclick="copyPrompt(this)">Copy prompt</button>
+        <div class="prompt-text">I'm working in R with ggplot2. Here's my current plot code:
+
+[paste your code here]
+
+I want to change the following:
+- [describe what you want to change]
+
+Please modify the code and explain what each change does.</div>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">What to ask AI about</div>
+        <p>Axis labels and tick marks · Legend position and appearance · Font sizes and families · Color palette changes · Adding text or annotation labels · Adjusting margins · Changing background or gridlines. Describe what you see vs. what you want — AI will figure out the right <code>theme()</code> arguments.</p>
+      </div>
+    </div>
+
+    <div class="page-nav">
+      <a href="day5.html">← Day 5: R Data Structures</a>
+      <span></span>
+    </div>
+
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 4 — Git + Intro to R</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-toggle" aria-label="Toggle menu">☰</button>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <a href="index.html">Git, R &amp; Unix for Reproducible Science<span>IMCI · University of Idaho</span></a>
+  </div>
+  <nav>
+    <div class="nav-section">Overview</div>
+    <a href="index.html">Home</a>
+    <div class="nav-section">Workshop Days</div>
+    <a href="day1.html">Day 1 — Unix Basics<span class="day-label">Tue Oct 14</span></a>
+    <a href="day2.html">Day 2 — Files &amp; Directories<span class="day-label">Thu Oct 16</span></a>
+    <a href="day3.html">Day 3 — Loops &amp; Scripts<span class="day-label">Tue Oct 21</span></a>
+    <a href="day4.html">Day 4 — Git + Intro to R<span class="day-label">Thu Oct 23</span></a>
+    <a href="day5.html">Day 5 — R Data Structures<span class="day-label">Tue Oct 28</span></a>
+    <a href="day6.html">Day 6 — R Visualization<span class="day-label">Thu Oct 30</span></a>
+  </nav>
+  <div class="sidebar-footer">Tues &amp; Thurs · 3:00–5:30 PST<br>IRIC 352 / Zoom</div>
+</aside>
+
+<div class="main">
+  <header class="page-header">
+    <div class="day-tag">Day 4 · Thursday, October 23</div>
+    <h1>Git + Intro to R</h1>
+    <div class="meta">
+      <span>Part 1: Version control with Git and GitHub</span>
+      <span>Part 2: RStudio orientation and R basics</span>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">Resources</div>
+      <ul class="link-list">
+        <li><a href="https://evanwill.github.io/get-git-b/" target="_blank">Get Git! (Evan Will)</a><span class="link-desc">Excellent introductory Git guide</span></li>
+        <li><a href="https://swcarpentry.github.io/git-novice/instructor/01-basics.html" target="_blank">Carpentries Git Novice Lesson</a><span class="link-desc">Official lesson materials</span></li>
+        <li><a href="https://git-scm.com/install/windows" target="_blank">Git for Windows</a><span class="link-desc">Install the latest version if needed</span></li>
+        <li><a href="https://posit.co/download/rstudio-desktop/" target="_blank">R and RStudio</a><span class="link-desc">Download and install before today</span></li>
+        <li><a href="https://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro.html" target="_blank">Carpentries: Intro to R and RStudio</a></li>
+        <li><a href="https://swcarpentry.github.io/r-novice-gapminder/04-data-structures-part1.html" target="_blank">Carpentries: Data Structures</a></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Part 1: Git — Version Control</div>
+      <p>Git tracks changes to your files over time. Think of it as a detailed undo history for your entire project, shared with collaborators.</p>
+
+      <h2>Configure Git</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ git --version
+$ git config --global user.name "Your Name"
+$ git config --global user.email "youremail@gmail.com"
+$ git config --global core.editor "nano -w"
+$ git config --list      <span class="cm"># verify your settings</span></code></pre>
+      </div>
+
+      <h2>Create a Local Repository</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cd ~/Desktop
+$ mkdir example-repo
+$ cd example-repo
+$ git init            <span class="cm"># initialize a new repo</span>
+$ ls -la              <span class="cm"># notice the hidden .git folder</span>
+$ git status          <span class="cm"># always a safe first command</span></code></pre>
+      </div>
+      <div class="callout warn">
+        <div class="callout-title">Don't nest repos</div>
+        <p>Never run <code>git init</code> inside a directory that's already a git repository. This causes confusing problems.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">The Git Workflow</div>
+      <p>Three stages: <strong>Working Directory → Staging Area → Repository</strong></p>
+      <p>Follow this order every time:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>git status           <span class="cm"># check what's changed</span>
+git pull             <span class="cm"># get latest changes from remote (when applicable)</span>
+git add file.txt     <span class="cm"># stage a file (or: git add -A for everything)</span>
+git commit -m "message"   <span class="cm"># save to the repository with a message</span>
+git push             <span class="cm"># send to remote (GitHub)</span></code></pre>
+      </div>
+
+      <h2>Add and Commit Files</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cp ~/Desktop/shell-lesson-data/exercise-data/alkanes/middle.sh .
+$ cp ~/Desktop/shell-lesson-data/exercise-data/alkanes/*.pdb .
+$ cp ~/Desktop/shell-lesson-data/exercise-data/alkanes/sorted.sh .
+
+$ git status
+$ git add -A
+$ git status
+$ git commit -m "added first scripts and data files"
+$ touch another_file.txt
+$ git status</code></pre>
+      </div>
+
+      <div class="callout demo">
+        <div class="callout-title">Exercise 1</div>
+        <p>Create a new file using any method you've learned. Add it to the repo and commit it.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Viewing History and Reverting</div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ nano sorted.sh          <span class="cm"># deliberately mess up the script</span>
+$ git add -A
+$ git commit -m "added function to sorted.sh"
+
+<span class="cm"># Oh no — the script is broken. Revert it.</span>
+$ git checkout HEAD~1 sorted.sh   <span class="cm"># restore previous version</span>
+$ less sorted.sh
+$ git status
+$ git add -A
+$ git commit -m "revert to old sorted.sh"
+$ git log --oneline               <span class="cm"># see compact history</span></code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">.gitignore</div>
+      <p>Not everything should be tracked. Large data files, binary outputs, and temporary files waste space and slow down your repo.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ nano .gitignore</code></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>*.pdb</code></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ git status
+$ git add -A
+$ git commit -m "add .gitignore"
+$ git rm --cached *.pdb     <span class="cm"># untrack already-tracked files</span>
+$ git commit -m "remove .pdb files from tracking"</code></pre>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Best practice</div>
+        <p>Create your <code>.gitignore</code> before you start adding files. It's much harder to untrack files after the fact.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">git diff and Remote Repos</div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ nano sorted.sh       <span class="cm"># make a change</span>
+$ git diff             <span class="cm"># see exactly what changed</span>
+$ git add sorted.sh
+$ git commit -m "updated sorted.sh"
+$ git log --oneline</code></pre>
+      </div>
+
+      <h2>Connecting to GitHub</h2>
+      <ol>
+        <li>Go to <a href="https://github.com" target="_blank">github.com</a> and create a new repository called <code>creatures_github</code></li>
+        <li>Edit the README in the browser and commit — this initializes the remote repo</li>
+        <li>Clone it to your Desktop</li>
+      </ol>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cd ~/Desktop
+$ git clone [repo SSH link]
+$ cd creatures_github
+$ cp ../example-repo/*.sh .
+$ git pull                          <span class="cm"># always pull before pushing</span>
+$ git add -A
+$ git commit -m "added shell scripts to repo"
+$ git push</code></pre>
+      </div>
+
+      <ul class="link-list">
+        <li><a href="https://evanwill.github.io/get-git-b/content/2-install.html#authentication" target="_blank">GitHub Authentication Guide</a><span class="link-desc">Token or SSH setup if you hit authentication errors</span></li>
+        <li><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent" target="_blank">SSH Key Setup (GitHub Docs)</a><span class="link-desc">Recommended for regular Git users</span></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Ask AI to Explain Git Concepts <span class="badge ai">AI</span></div>
+      <p>Git errors and concepts can be confusing at first. AI is great at explaining them in plain language.</p>
+      <div class="prompt-box">
+        <div class="prompt-label">Try this prompt when you hit a Git error</div>
+        <button class="prompt-copy" onclick="copyPrompt(this)">Copy prompt</button>
+        <div class="prompt-text">I'm learning Git and I got this error message. Can you explain what it means and how to fix it?
+
+[paste your error message here]
+
+I'm using Git on the command line and I'm trying to [describe what you were doing].</div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">Or ask for concept explanations</div>
+        <button class="prompt-copy" onclick="copyPrompt(this)">Copy prompt</button>
+        <div class="prompt-text">I'm learning Git. Can you explain the difference between the working directory, the staging area, and the repository? Use an analogy to make it concrete. Then explain what git add and git commit do in terms of that analogy.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Part 2: Intro to R</div>
+      <p>Install R and RStudio if you haven't yet — see the link at the top of this page.</p>
+
+      <h2>RStudio Orientation</h2>
+      <p>Open RStudio. You'll see four panels: Console (bottom left), Environment (top right), Files/Plots (bottom right), and the Script editor (top left — open a new script with File → New File → R Script).</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="fn">getwd</span>()       <span class="cm"># where are you?</span>
+<span class="fn">list.files</span>()  <span class="cm"># what files are here?</span></code></pre>
+      </div>
+
+      <h2>R as a Calculator</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="nm">1</span> <span class="op">+</span> <span class="nm">2</span>
+<span class="nm">10</span> <span class="op">*</span> <span class="nm">5</span>
+<span class="fn">sin</span>(<span class="nm">1</span>) <span class="op">+</span> <span class="nm">1</span> <span class="op">*</span> <span class="nm">5</span>
+
+<span class="cm"># Named parameters vs. positional</span>
+<span class="fn">log</span>(<span class="nm">5</span>, <span class="nm">10</span>)        <span class="cm"># log base 10 of 5</span>
+<span class="fn">log</span>(<span class="nm">5</span>)            <span class="cm"># natural log (base e)</span>
+<span class="fn">log</span>(<span class="nm">5</span>, <span class="nm">2.71828</span>)   <span class="cm"># same as natural log</span>
+
+<span class="cm"># Logical comparisons</span>
+<span class="nm">1</span> <span class="op">==</span> <span class="nm">1</span>
+<span class="nm">1</span> <span class="op">!=</span> <span class="nm">2</span>
+<span class="nm">1</span> <span class="op">&lt;</span> <span class="nm">2</span></code></pre>
+      </div>
+
+      <h2>Variables</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>x <span class="op">&lt;-</span> <span class="nm">1</span><span class="op">/</span><span class="nm">40</span>     <span class="cm"># &lt;- is the assignment operator in R</span>
+x              <span class="cm"># print the value</span>
+
+pirate <span class="op">&lt;-</span> <span class="nm">5</span>
+PirateHat <span class="op">&lt;-</span> <span class="nm">1</span>
+<span class="cm"># 1pirate &lt;- 5  # ERROR: can't start a variable name with a number</span>
+
+pirate <span class="op">&lt;-</span> pirate <span class="op">+</span> <span class="nm">1</span>   <span class="cm"># modify a variable</span>
+<span class="fn">rm</span>(pirate, PirateHat)   <span class="cm"># remove from environment</span></code></pre>
+      </div>
+
+      <h2>R Projects</h2>
+      <p>R Projects keep your work organized. Go to <strong>File → New Project → New Directory</strong> to create one. The project sets your working directory automatically every time you open it.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Open the Repro_workshop.Rproj file to follow along</span>
+<span class="cm"># Create a standard project structure</span>
+<span class="fn">dir.create</span>(<span class="st">"plots"</span>)
+<span class="fn">dir.create</span>(<span class="st">"rawdata"</span>)
+<span class="fn">dir.create</span>(<span class="st">"results"</span>)
+
+<span class="cm"># Download the gapminder dataset</span>
+<span class="fn">download.file</span>(<span class="st">"https://swcarpentry.github.io/r-novice-gapminder/data/gapminder_data.csv"</span>,
+              <span class="st">"rawdata/gapminder.csv"</span>)</code></pre>
+      </div>
+    </div>
+
+    <div class="page-nav">
+      <a href="day3.html">← Day 3: Loops &amp; Scripts</a>
+      <a class="next" href="day5.html">Day 5: R Data Structures →</a>
+    </div>
+
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>

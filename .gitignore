@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+Icon
+
+# Large data files
+*.zip
+*.gz
+*.tar
+*.csv
+*.xlsx
+*.xls
+
+# R outputs
+*.Rdata
+*.RData
+*.rds
+Rplots.pdf
+
+# Jupyter / Python
+*.ipynb_checkpoints
+__pycache__/
+*.pyc
+
+# Shell lesson data
+shell-lesson-data/
+
+# R project user settings
+.Rproj.user/
+*.Rproj

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 1 — Unix Basics</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-toggle" aria-label="Toggle menu">☰</button>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <a href="index.html">Git, R &amp; Unix for Reproducible Science<span>IMCI · University of Idaho</span></a>
+  </div>
+  <nav>
+    <div class="nav-section">Overview</div>
+    <a href="index.html">Home</a>
+    <div class="nav-section">Workshop Days</div>
+    <a href="day1.html">Day 1 — Unix Basics<span class="day-label">Tue Oct 14</span></a>
+    <a href="day2.html">Day 2 — Files &amp; Directories<span class="day-label">Thu Oct 16</span></a>
+    <a href="day3.html">Day 3 — Loops &amp; Scripts<span class="day-label">Tue Oct 21</span></a>
+    <a href="day4.html">Day 4 — Git + Intro to R<span class="day-label">Thu Oct 23</span></a>
+    <a href="day5.html">Day 5 — R Data Structures<span class="day-label">Tue Oct 28</span></a>
+    <a href="day6.html">Day 6 — R Visualization<span class="day-label">Thu Oct 30</span></a>
+  </nav>
+  <div class="sidebar-footer">Tues &amp; Thurs · 3:00–5:30 PST<br>IRIC 352 / Zoom</div>
+</aside>
+
+<div class="main">
+  <header class="page-header">
+    <div class="day-tag">Day 1 · Tuesday, October 14</div>
+    <h1>Unix Basics</h1>
+    <div class="meta">
+      <span>Carpentries Shell Lesson</span>
+      <span>Dataset: shell-lesson-data.zip</span>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">Learning Objectives</div>
+      <ul>
+        <li>Explain how the shell relates to the keyboard, screen, OS, and user programs</li>
+        <li>Explain when and why to use command-line interfaces instead of GUIs</li>
+        <li>Explain the difference between a file and a directory</li>
+        <li>Translate between absolute and relative paths</li>
+        <li>Use options and arguments to change command behavior</li>
+        <li>Use tab completion effectively</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Setup</div>
+      <ul class="link-list">
+        <li><a href="https://learn.microsoft.com/en-us/windows/wsl/install" target="_blank">WSL (Windows users)</a><span class="link-desc">Windows Subsystem for Linux</span></li>
+        <li><a href="https://carpentries.github.io/workshop-template/install_instructions/#shell" target="_blank">Git for Windows</a><span class="link-desc">Alternative for Windows users</span></li>
+        <li><a href="https://swcarpentry.github.io/shell-novice/data/shell-lesson-data.zip" target="_blank">shell-lesson-data.zip</a><span class="link-desc">Workshop dataset — download and unzip to your Desktop</span></li>
+        <li><a href="https://swcarpentry.github.io/shell-novice/01-intro.html" target="_blank">Carpentries lesson</a><span class="link-desc">Official lesson page we follow today</span></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">The Shell Prompt</div>
+      <p>Open your terminal. You should see a prompt — this means the shell is ready for input.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ |        <span class="cm"># The prompt — hey, it's working!</span>
+$ ls       <span class="cm"># List files in the current directory (your home directory)</span>
+$ pwd      <span class="cm"># Print working directory — where are you?</span></code></pre>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Windows users</div>
+        <p>If you're using WSL, navigate to your Windows files with: <code>cd /mnt/c/&lt;your username&gt;</code></p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Navigating Directories</div>
+      <p><code>cd</code> (change directory) is the most-used command you'll learn today. Master it.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cd /             <span class="cm"># Go to the root of the filesystem</span>
+$ cd               <span class="cm"># Shortcut: go back to your home directory</span>
+$ cd ~/            <span class="cm"># Same thing — ~ always means home</span>
+$ cd Desktop/shell-lesson-data/exercise-data</code></pre>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Tab complete — use it constantly</div>
+        <p>Press Tab after typing the first few letters of a path. The shell completes it for you. If nothing happens, press Tab twice to see all options. Try misspelling something to see what the error looks like: <code>cd Desktap/shell-lesson-data</code></p>
+      </div>
+
+      <h2>Moving Up and Around</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cd ..            <span class="cm"># Move up one directory level</span>
+$ cd exercise-data <span class="cm"># Move into a subdirectory</span>
+$ cd -             <span class="cm"># Go back to the previous directory</span></code></pre>
+      </div>
+
+      <div class="callout demo">
+        <div class="callout-title">Problem — predict the outcome</div>
+        <p>What directory will this move you to? <code>cd ../..</code><br>
+        Come up with two ways to navigate back to the directory containing the workshop data.</p>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-title">Up and down arrows</div>
+        <p>Use the up/down arrow keys to scroll through your command history — you don't have to retype commands.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Listing Files and Using Flags</div>
+      <p>Flags modify how a command behaves. They start with a dash <code>-</code>.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ ls -l            <span class="cm"># Long format — shows permissions, size, date</span>
+$ ls -lF           <span class="cm"># Adds "/" after directory names</span>
+$ ls -lah          <span class="cm"># Long format, all files (including hidden), human-readable sizes</span>
+$ clear            <span class="cm"># Clear the terminal screen</span>
+$ man ls           <span class="cm"># Read the manual for ls — press q to exit</span></code></pre>
+      </div>
+
+      <div class="callout demo">
+        <div class="callout-title">Problem #1</div>
+        <p>Use the manual (<code>man ls</code>) to determine how to add color to the output of <code>ls</code>. Answer: <code>ls -G</code></p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Pipes, Wildcards, and Viewing Files</div>
+      <p>The real power of Unix comes from combining commands. The pipe <code>|</code> sends the output of one command into the input of another.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ ls -F | grep \/ > directories.txt
+<span class="cm"># | pipes output into grep (a search tool)</span>
+<span class="cm"># grep \/ searches for "/" (i.e., directories)</span>
+<span class="cm"># > writes the output to a new file called directories.txt</span></code></pre>
+      </div>
+
+      <h2>Viewing File Contents</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ head directories.txt      <span class="cm"># Show first 10 lines</span>
+$ tail directories.txt      <span class="cm"># Show last 10 lines</span>
+$ less directories.txt      <span class="cm"># Scroll through the file (press q to exit)</span>
+$ more directories.txt      <span class="cm"># Similar to less</span></code></pre>
+      </div>
+
+      <h2>Wildcards</h2>
+      <p>The wildcard <code>*</code> matches any number of characters. Navigate to <code>~/Desktop/shell-lesson-data/north-pacific-gyre</code> and try:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ wc -l NENE01736A.txt      <span class="cm"># Count lines in one file</span>
+$ wc -l *.txt               <span class="cm"># Count lines in ALL .txt files</span></code></pre>
+      </div>
+
+      <h2>Absolute vs. Relative Paths</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cd ~/Desktop/shell-lesson-data
+$ head -5 exercise-data/directories.txt   <span class="cm"># relative path — works</span>
+$ head -5 directories.txt                 <span class="cm"># why doesn't this work?</span>
+$ head -5 ~/Desktop/shell-lesson-data/exercise-data/directories.txt  <span class="cm"># absolute path</span>
+$ rm directories.txt                      <span class="cm"># remove the file when done</span></code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Ask AI to Explain a Pipeline <span class="badge ai">AI</span></div>
+      <p>Pipelines can be hard to read at first. Use AI to break them down. Try this prompt:</p>
+      <div class="prompt-box">
+        <div class="prompt-label">Try this prompt in Claude or ChatGPT</div>
+        <button class="prompt-copy" onclick="copyPrompt(this)">Copy prompt</button>
+        <div class="prompt-text">I'm learning Unix shell commands. Can you explain what this pipeline does, step by step?
+
+ls -F | grep \/ > directories.txt
+
+Please explain each part: what ls -F does, what the pipe | does, what grep \/ does, and what > directories.txt does.</div>
+      </div>
+      <p>Then try modifying the command — ask AI what would happen if you changed <code>\/</code> to something else, or used <code>&gt;&gt;</code> instead of <code>&gt;</code>.</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">Before Day 2</div>
+      <p>Make sure you have <code>shell-lesson-data</code> on your Desktop. We'll re-download it fresh at the start of Day 2.</p>
+    </div>
+
+    <div class="page-nav">
+      <span></span>
+      <a class="next" href="day2.html">Day 2: Files &amp; Directories →</a>
+    </div>
+
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>

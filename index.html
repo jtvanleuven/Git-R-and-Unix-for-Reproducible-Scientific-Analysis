@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git, R, and Unix for Reproducible Scientific Analysis — IMCI Workshop</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-toggle" aria-label="Toggle menu">☰</button>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <a href="index.html">Git, R &amp; Unix for Reproducible Science<span>IMCI · University of Idaho</span></a>
+  </div>
+  <nav>
+    <div class="nav-section">Overview</div>
+    <a href="index.html">Home</a>
+    <div class="nav-section">Workshop Days</div>
+    <a href="day1.html">Day 1 — Unix Basics<span class="day-label">Tue Oct 14</span></a>
+    <a href="day2.html">Day 2 — Files &amp; Directories<span class="day-label">Thu Oct 16</span></a>
+    <a href="day3.html">Day 3 — Loops &amp; Scripts<span class="day-label">Tue Oct 21</span></a>
+    <a href="day4.html">Day 4 — Git + Intro to R<span class="day-label">Thu Oct 23</span></a>
+    <a href="day5.html">Day 5 — R Data Structures<span class="day-label">Tue Oct 28</span></a>
+    <a href="day6.html">Day 6 — R Visualization<span class="day-label">Thu Oct 30</span></a>
+  </nav>
+  <div class="sidebar-footer">Tues &amp; Thurs · 3:00–5:30 PST<br>IRIC 352 / Zoom</div>
+</aside>
+
+<div class="main">
+  <header class="page-header">
+    <div class="day-tag">University of Idaho · IMCI</div>
+    <h1>Git, R, and Unix for Reproducible Scientific Analysis</h1>
+    <p style="color:#94A3B8;margin-top:10px;font-size:15px;">A six-session Software Carpentries workshop covering Unix, shell scripting, Git, and R — with AI as a coding collaborator throughout.</p>
+    <div class="meta">
+      <span>October 14–30, 2025</span>
+      <span>Tuesdays &amp; Thursdays 3:00–5:30 PST</span>
+      <span>IRIC 352 or Zoom</span>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">Workshop Schedule</div>
+      <div class="day-grid">
+        <a class="day-card" href="day1.html">
+          <div class="card-day">Day 1 · Tue Oct 14</div>
+          <h3>Unix Basics</h3>
+          <p>The shell, navigating directories, flags, pipes, wildcards, and viewing files.</p>
+          <div class="card-date">Dataset: shell-lesson-data.zip</div>
+        </a>
+        <a class="day-card" href="day2.html">
+          <div class="card-day">Day 2 · Thu Oct 16</div>
+          <h3>Files &amp; Directories</h3>
+          <p>Creating and manipulating files, nano, moving and copying, file permissions, and combining commands.</p>
+          <div class="card-date">AI activity: interpret a pipeline</div>
+        </a>
+        <a class="day-card" href="day3.html">
+          <div class="card-day">Day 3 · Tue Oct 21</div>
+          <h3>Loops &amp; Shell Scripts</h3>
+          <p>For loops, brace expansion, writing reusable shell scripts with arguments and comments.</p>
+          <div class="card-date">AI activity: write a shell script</div>
+        </a>
+        <a class="day-card" href="day4.html">
+          <div class="card-day">Day 4 · Thu Oct 23</div>
+          <h3>Git + Intro to R</h3>
+          <p>Version control with Git and GitHub, then RStudio orientation and your first R session.</p>
+          <div class="card-date">AI activity: explain Git concepts</div>
+        </a>
+        <a class="day-card" href="day5.html">
+          <div class="card-day">Day 5 · Tue Oct 28</div>
+          <h3>R Data Structures &amp; dplyr</h3>
+          <p>Object types, vectors, data frames, subsetting, and the tidyverse pipeline with select/filter/mutate.</p>
+          <div class="card-date">AI activity: write a dplyr pipeline</div>
+        </a>
+        <a class="day-card" href="day6.html">
+          <div class="card-day">Day 6 · Thu Oct 30</div>
+          <h3>R Visualization</h3>
+          <p>Base graphics, ggplot2 grammar, colors, themes, saving figures, facets, and multi-panel plots.</p>
+          <div class="card-date">AI activity: customize ggplot2 code</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Before You Arrive</div>
+
+      <h2>Install Required Software</h2>
+      <p>Please install the following before Day 1. Instructions are on each day's page.</p>
+      <ul class="link-list">
+        <li><a href="https://learn.microsoft.com/en-us/windows/wsl/install" target="_blank">WSL (Windows users)</a><span class="link-desc">Windows Subsystem for Linux — required if you're on Windows</span></li>
+        <li><a href="https://carpentries.github.io/workshop-template/install_instructions/#shell" target="_blank">Git for Windows</a><span class="link-desc">Alternative shell setup for Windows users</span></li>
+        <li><a href="https://posit.co/download/rstudio-desktop/" target="_blank">R and RStudio</a><span class="link-desc">Download both — needed starting Day 4</span></li>
+      </ul>
+
+      <h2>Download the Shell Dataset</h2>
+      <p>We use the Carpentries shell-lesson-data throughout Days 1–3. Download it before Day 1:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Download and unzip on macOS/Linux</span>
+<span class="kw">wget</span> https://swcarpentry.github.io/shell-novice/data/shell-lesson-data.zip
+<span class="kw">unzip</span> shell-lesson-data.zip</code></pre>
+      </div>
+
+      <h2>Free AI Tools We'll Use</h2>
+      <p>Have one of these open in a browser tab during coding sessions.</p>
+      <ul class="link-list">
+        <li><a href="https://claude.ai" target="_blank">claude.ai</a><span class="link-desc">Strong at explaining code and iterating — our top pick for this workshop</span></li>
+        <li><a href="https://chatgpt.com" target="_blank">chatgpt.com</a><span class="link-desc">Widely known, solid support for shell and R</span></li>
+        <li><a href="https://gemini.google.com" target="_blank">gemini.google.com</a><span class="link-desc">Free, works with your Google account</span></li>
+      </ul>
+
+      <h2>Helpful Links</h2>
+      <ul class="link-list">
+        <li><a href="https://swcarpentry.github.io/shell-novice/01-intro.html" target="_blank">Carpentries Shell Novice Lesson</a><span class="link-desc">The official Carpentries materials we follow for Unix</span></li>
+        <li><a href="https://swcarpentry.github.io/r-novice-gapminder/" target="_blank">Carpentries R for Reproducible Research</a><span class="link-desc">The official Carpentries materials we follow for R</span></li>
+        <li><a href="https://evanwill.github.io/get-git-b/" target="_blank">Get Git! (Evan Will)</a><span class="link-desc">Excellent introductory Git guide</span></li>
+        <li><a href="https://uidaho.zoom.us/j/89245204577" target="_blank">Workshop Zoom Link</a><span class="link-desc">Passcode: 121279</span></li>
+        <li><a href="https://imci.uidaho.edu/data-carpentries-training" target="_blank">IMCI Main Page</a><span class="link-desc">University of Idaho IMCI Data Carpentries training</span></li>
+        <li><a href="https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html" target="_blank">Code of Conduct</a><span class="link-desc">The Carpentries community standards</span></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Prompt Writing Best Practices <span class="badge ai">AI</span></div>
+      <p>You'll use AI throughout this workshop to understand commands, debug errors, and write code. These five rules will make your prompts much more effective:</p>
+      <ol>
+        <li><strong>Give context.</strong> Tell the AI what language/tool you're using and what your goal is. "I'm using bash on macOS and I want to…"</li>
+        <li><strong>Be specific.</strong> Vague questions get vague answers. Describe exactly what you have and what you want.</li>
+        <li><strong>Paste errors verbatim.</strong> Copy the full error message — don't paraphrase it. The exact wording matters.</li>
+        <li><strong>Ask for explanations.</strong> Don't just ask for code — ask the AI to explain what each part does so you learn from it.</li>
+        <li><strong>Iterate in the same conversation.</strong> AI remembers context within a session. Follow up, ask "why?", and refine.</li>
+      </ol>
+    </div>
+
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>

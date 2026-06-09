@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 2 — Files &amp; Directories</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-toggle" aria-label="Toggle menu">☰</button>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <a href="index.html">Git, R &amp; Unix for Reproducible Science<span>IMCI · University of Idaho</span></a>
+  </div>
+  <nav>
+    <div class="nav-section">Overview</div>
+    <a href="index.html">Home</a>
+    <div class="nav-section">Workshop Days</div>
+    <a href="day1.html">Day 1 — Unix Basics<span class="day-label">Tue Oct 14</span></a>
+    <a href="day2.html">Day 2 — Files &amp; Directories<span class="day-label">Thu Oct 16</span></a>
+    <a href="day3.html">Day 3 — Loops &amp; Scripts<span class="day-label">Tue Oct 21</span></a>
+    <a href="day4.html">Day 4 — Git + Intro to R<span class="day-label">Thu Oct 23</span></a>
+    <a href="day5.html">Day 5 — R Data Structures<span class="day-label">Tue Oct 28</span></a>
+    <a href="day6.html">Day 6 — R Visualization<span class="day-label">Thu Oct 30</span></a>
+  </nav>
+  <div class="sidebar-footer">Tues &amp; Thurs · 3:00–5:30 PST<br>IRIC 352 / Zoom</div>
+</aside>
+
+<div class="main">
+  <header class="page-header">
+    <div class="day-tag">Day 2 · Thursday, October 16</div>
+    <h1>Files &amp; Directories</h1>
+    <div class="meta">
+      <span>Review from Day 1: paths, ls, cd, pipes</span>
+      <span>Goals: create, move, copy, and combine files</span>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">Day 1 Review</div>
+      <ul>
+        <li><code>pwd</code> — print working directory</li>
+        <li><code>ls</code>, <code>ls -lah</code> — list files with options</li>
+        <li><code>cd</code>, <code>cd ..</code>, <code>cd ~</code> — navigate directories</li>
+        <li><code>head</code>, <code>tail</code>, <code>less</code> — view file contents</li>
+        <li><code>|</code> pipe — chain commands; <code>&gt;</code> redirect output to a file</li>
+        <li><code>*</code> wildcard — match any number of characters</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Setup — Fresh Data</div>
+      <p>We'll start with a fresh copy of the shell data today.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cd ~/Desktop/
+$ rm -r shell-lesson-data          <span class="cm"># remove old copy</span>
+$ wget https://swcarpentry.github.io/shell-novice/data/shell-lesson-data.zip
+$ unzip shell-lesson-data.zip
+$ cd shell-lesson-data</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Creating Directories and Files</div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ mkdir thesis         <span class="cm"># make a new directory</span>
+$ ls -F</code></pre>
+      </div>
+
+      <div class="callout demo">
+        <div class="callout-title">Practice: naming conventions</div>
+        <p>Try making a directory called "Thesis version1". What happens? Why? Remember: avoid spaces in file and directory names. Use underscores or hyphens instead.</p>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ rm -r thesis version1   <span class="cm"># -r flag required for directories (recursive)</span>
+$ mkdir thesis_v1
+$ cd thesis_v1</code></pre>
+      </div>
+
+      <h2>Creating Files with nano</h2>
+      <p><code>nano</code> is a simple text editor that runs inside the terminal. Write something, then save with <code>Ctrl+O</code> and exit with <code>Ctrl+X</code>.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ nano draft.txt</code></pre>
+      </div>
+
+      <h2>File Extensions</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cp draft.txt draft.fasta
+$ cp draft.txt draft.mp3
+<span class="cm"># Open these files — do they look any different?</span>
+<span class="cm"># Extensions are just labels — Unix doesn't care what they are</span></code></pre>
+      </div>
+
+      <h2>Moving and Copying Files</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ mkdir oldversions
+$ mv draft.txt oldversions/      <span class="cm"># move the file</span>
+$ cp oldversions/draft.txt .     <span class="cm"># copy it back (. means "current directory")</span>
+$ nano draft.txt                 <span class="cm"># edit the copy</span></code></pre>
+      </div>
+
+      <h2>Creating Files with echo</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ echo This is my final draft
+$ echo This is my final draft > thesis_final.txt    <span class="cm"># write to file (overwrites)</span>
+$ echo This is my final draft >> thesis_final.txt   <span class="cm"># append (adds to end)</span></code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Working with Multiple Files</div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cd north-pacific-gyre
+$ mkdir rawdata
+
+<span class="cm"># All of these do the same thing:</span>
+$ cp *.txt rawdata/
+$ cp NEN* rawdata/
+$ cp N*txt rawdata/
+
+<span class="cm"># Wildcards work on folders too</span>
+$ cp */*.txt all_text/</code></pre>
+      </div>
+
+      <h2>The ? Wildcard</h2>
+      <p><code>?</code> matches exactly one character — useful when you don't want to match everything.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cd ../thesis
+$ cp draft.txt draft_v1.txt
+$ cp draft.txt draft_v2.txt
+$ cp draft.txt draft_v3.txt
+$ cp draft.txt draft_v11.txt
+$ cp draft.txt draft_v12.txt
+
+$ mkdir old
+$ mv draft_v?.txt old   <span class="cm"># matches v1, v2, v3 but NOT v11, v12 (two chars after v)</span>
+$ ls old</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Counting, Sorting, and Combining</div>
+      <p>Navigate to <code>exercise-data/alkanes</code> — this directory has <code>*.pdb</code> files (atomic coordinate files from crystallography).</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ wc -l *.pdb              <span class="cm"># count lines in each file</span>
+$ wc *.pdb                 <span class="cm"># lines, words, and characters</span>
+$ wc -l *.pdb > lengths.txt
+$ less lengths.txt
+$ sort -n lengths.txt      <span class="cm"># sort numerically</span></code></pre>
+      </div>
+
+      <div class="callout demo">
+        <div class="callout-title">Practice problem</div>
+        <p>Create a new version of <code>lengths.txt</code> that does NOT include the "total" line at the end. Hint: combine <code>wc</code>, <code>head</code>, and a pipe.</p>
+        <p>Answer: <code>wc -l *.pdb | head -6 > lengths.txt</code></p>
+      </div>
+
+      <h2>Extracting Columns with cut</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cd ../exercise-data/animal-counts
+$ less animals.csv
+
+$ cut -d , -f 2 animals.csv    <span class="cm"># -d sets delimiter (comma), -f 2 = second column</span>
+
+<span class="cm"># Remove duplicates — must sort first for uniq to work</span>
+$ cut -d , -f 2 animals.csv | sort | uniq
+$ cut -d , -f 2 animals.csv | sort | uniq -c   <span class="cm"># -c adds counts</span></code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">File Permissions and Shell Scripts</div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cd ../north-pacific-gyre
+$ less goodiff.sh       <span class="cm"># a shell script — do you recognize any commands?</span>
+
+<span class="cm"># The first line (shebang) identifies the interpreter</span>
+$ which bash
+$ which python
+$ which R
+
+$ ls -lh                <span class="cm"># look at permissions (rw-r--r-- etc.)</span>
+$ chmod +x *.sh         <span class="cm"># make scripts executable</span>
+$ ls -lh                <span class="cm"># notice the x in permissions now</span>
+$ ./goodiff.sh          <span class="cm"># run the script</span></code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Ask AI to Explain a Command <span class="badge ai">AI</span></div>
+      <p>Combining commands with pipes produces powerful but hard-to-read one-liners. Use AI to understand them. Try this prompt:</p>
+      <div class="prompt-box">
+        <div class="prompt-label">Try this prompt in Claude or ChatGPT</div>
+        <button class="prompt-copy" onclick="copyPrompt(this)">Copy prompt</button>
+        <div class="prompt-text">I'm learning Unix shell commands. Can you explain what this command does, step by step?
+
+cut -d , -f 2 animals.csv | sort | uniq -c
+
+What does each part do? What would the output look like for a CSV file with animal names in the second column?</div>
+      </div>
+      <p>After you understand it, ask AI: "How would I modify this to show only animals that appear more than 3 times?"</p>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">Before Day 3</div>
+      <p>No additional setup needed. We'll continue working in <code>shell-lesson-data</code> for loops and scripts.</p>
+    </div>
+
+    <div class="page-nav">
+      <a href="day1.html">← Day 1: Unix Basics</a>
+      <a class="next" href="day3.html">Day 3: Loops &amp; Scripts →</a>
+    </div>
+
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>

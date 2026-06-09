@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 3 — Loops &amp; Shell Scripts</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="menu-toggle" aria-label="Toggle menu">☰</button>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <a href="index.html">Git, R &amp; Unix for Reproducible Science<span>IMCI · University of Idaho</span></a>
+  </div>
+  <nav>
+    <div class="nav-section">Overview</div>
+    <a href="index.html">Home</a>
+    <div class="nav-section">Workshop Days</div>
+    <a href="day1.html">Day 1 — Unix Basics<span class="day-label">Tue Oct 14</span></a>
+    <a href="day2.html">Day 2 — Files &amp; Directories<span class="day-label">Thu Oct 16</span></a>
+    <a href="day3.html">Day 3 — Loops &amp; Scripts<span class="day-label">Tue Oct 21</span></a>
+    <a href="day4.html">Day 4 — Git + Intro to R<span class="day-label">Thu Oct 23</span></a>
+    <a href="day5.html">Day 5 — R Data Structures<span class="day-label">Tue Oct 28</span></a>
+    <a href="day6.html">Day 6 — R Visualization<span class="day-label">Thu Oct 30</span></a>
+  </nav>
+  <div class="sidebar-footer">Tues &amp; Thurs · 3:00–5:30 PST<br>IRIC 352 / Zoom</div>
+</aside>
+
+<div class="main">
+  <header class="page-header">
+    <div class="day-tag">Day 3 · Tuesday, October 21</div>
+    <h1>Loops &amp; Shell Scripts</h1>
+    <div class="meta">
+      <span>Carpentries Lessons: Loops + Shell Scripts</span>
+      <span>Working directory: exercise-data/creatures &amp; alkanes</span>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title">Day 2 Review</div>
+      <p>Commands from last week:</p>
+      <ul>
+        <li><code>mkdir</code>, <code>rm -r</code> — create/delete directories (avoid spaces in names)</li>
+        <li><code>nano</code> — text editor; <code>Ctrl+O</code> saves, <code>Ctrl+X</code> exits</li>
+        <li><code>mv</code>, <code>cp</code> — move and copy files</li>
+        <li><code>echo "text" &gt; file.txt</code> — create file; <code>&gt;&gt;</code> appends</li>
+        <li><code>*</code> (any chars), <code>?</code> (one char) — wildcard patterns</li>
+        <li><code>wc</code>, <code>sort</code>, <code>cut</code>, <code>uniq</code> — counting, sorting, extracting columns</li>
+        <li><code>|</code> chains commands; <code>&gt;</code> saves output to file</li>
+      </ul>
+      <div class="callout tip">
+        <div class="callout-title">Key concept</div>
+        <p>Commands are building blocks. Combine them with pipes to create powerful workflows.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Part 1: For Loops <span class="badge demo">Demo</span></div>
+      <p>Navigate to <code>exercise-data/creatures/</code> — you'll find three files: <code>basilisk.dat</code>, <code>minotaur.dat</code>, <code>unicorn.dat</code>.</p>
+
+      <h2>The Problem: Repeating a Command</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ head -n 5 basilisk.dat minotaur.dat unicorn.dat
+<span class="cm"># Works, but what if you had 100 files?</span>
+
+$ head -n 5 *.dat       <span class="cm"># wildcard helps, but...</span>
+
+<span class="cm"># What if you wanted only the CLASSIFICATION line from each?</span>
+$ head -n 2 basilisk.dat minotaur.dat unicorn.dat | tail -n 1
+<span class="cm"># Oops — only gets unicorn! This is why we need loops.</span></code></pre>
+      </div>
+
+      <h2>Your First Loop</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Multi-line version (easier to read)</span>
+$ for filename in *.dat
+> do
+>   echo $filename
+>   head -n 2 $filename | tail -n 1
+> done
+
+<span class="cm"># One-line version (same thing)</span>
+$ for filename in *.dat; do echo $filename; head -n 2 $filename | tail -n 1; done</code></pre>
+      </div>
+      <div class="callout tip">
+        <div class="callout-title">Semicolon placement</div>
+        <p>In one-line loops: semicolons go after the list, between commands inside the loop, and before <code>done</code>. If you forget, type the multi-line version first, then press the up arrow — the shell shows you the one-liner with semicolons already in place.</p>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-title">$ and &gt; have two meanings</div>
+        <p>When the shell <em>prints</em> <code>&gt;</code> or <code>$</code>, it's waiting for your input (a prompt). When <em>you type</em> them, you're redirecting output or getting a variable's value. Context matters.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Brace Expansion and Challenges</div>
+
+      <h2>Brace Expansion</h2>
+      <p>Instead of listing values one by one, use <code>{}</code> to generate sequences automatically.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Frustrating way — list every number</span>
+for loop_variable in 0 1 2 3 4 5 6 7 8 9; do echo $loop_variable; done
+
+<span class="cm"># Better way — brace expansion</span>
+for loop_variable in {0..9}; do echo $loop_variable; done
+
+<span class="cm"># More brace expansion examples</span>
+for i in {1..10}; do mkdir experiment_$i; done
+for i in {10..1}; do echo $i; sleep 1; done; echo "Blastoff!"</code></pre>
+      </div>
+
+      <h2>Loop Challenges</h2>
+      <p>Navigate to <code>exercise-data/alkanes</code> — six <code>*.pdb</code> files. Predict the output:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Challenge 1: what does this print, and why?</span>
+for datafile in *.pdb; do ls *.pdb; done
+
+<span class="cm"># Challenge 2: fix it to list each file once</span>
+for datafile in *.pdb; do ls $datafile; done
+
+<span class="cm"># Wildcard position matters</span>
+for filename in c*; do ls $filename; done     <span class="cm"># starts with c</span>
+for filename in *c*; do ls $filename; done    <span class="cm"># c anywhere in name</span></code></pre>
+      </div>
+
+      <h2>Saving Output in a Loop</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># > overwrites on each iteration (bad)</span>
+for alkanes in *.pdb; do cat $alkanes > alkanes.pdb; done
+
+<span class="cm"># >> appends — this is what you want</span>
+for datafile in *.pdb; do cat $datafile >> all.pdb; done</code></pre>
+      </div>
+
+      <h2>Nested Loops Challenge</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Create a directory structure for experiments</span>
+for species in cubane ethane methane
+do
+  for temperature in 25 30 37 40
+  do
+    mkdir $species-$temperature
+  done
+done
+
+<span class="cm"># Add a script file to each temperature directory</span>
+for species in octane pentane propane
+do
+  mkdir $species
+  for temperature in 25 30 37 40
+  do
+    mkdir $species/$temperature
+    touch $species/$temperature/experiment.sh
+  done
+done</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Part 2: Shell Scripts <span class="badge demo">Demo</span></div>
+      <p>Navigate to <code>exercise-data/alkanes</code>. Shell scripts let you save a sequence of commands and run them again later.</p>
+
+      <h2>Writing Your First Script</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ nano middle.sh</code></pre>
+      </div>
+      <p>Type the following into <code>nano</code>, save with <code>Ctrl+O</code>, exit with <code>Ctrl+X</code>:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>#!/bin/bash
+head -n 15 octane.pdb | tail -n 5</code></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ ls -lh middle.sh    <span class="cm"># note permissions: rw-r--r-- (not executable)</span>
+$ chmod +x middle.sh  <span class="cm"># make it executable</span>
+$ ls -lh middle.sh    <span class="cm"># now shows rwxr-xr-x</span>
+$ ./middle.sh         <span class="cm"># run it</span></code></pre>
+      </div>
+
+      <h2>Script Arguments: $1, $2, $3, $@</h2>
+      <p>Hard-coding filenames is inflexible. Use variables to accept arguments from the command line.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Edit middle.sh to use $1 (first argument)</span>
+head -n 15 "$1" | tail -n 5
+
+$ ./middle.sh octane.pdb
+
+<span class="cm"># Edit again to use all three arguments</span>
+head -n "$2" "$1" | tail -n "$3"
+
+$ bash middle.sh pentane.pdb 15 5
+$ bash middle.sh pentane.pdb 20 5</code></pre>
+      </div>
+
+      <h2>Adding Comments</h2>
+      <p>Comments (lines starting with <code>#</code>) explain what a script does. Always include them.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code># select lines from the middle of a file
+# usage: bash middle.sh filename end_line num_lines
+
+head -n "$2" "$1" | tail -n "$3"</code></pre>
+      </div>
+
+      <h2>The $@ Variable — All Arguments</h2>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ nano sorted.sh</code></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code># sort files by their length
+# usage: bash sorted.sh one_or_more_filenames
+
+wc -l "$@" | sort -n</code></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ bash sorted.sh *.pdb ../creatures/*.dat</code></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">AI Centerpiece: Write a Shell Script <span class="badge ai">AI</span></div>
+      <p>Now it's your turn. Instead of writing this script from scratch, describe what you want to AI and let it write the code — then read it, understand it, and run it.</p>
+
+      <div class="prompt-box">
+        <div class="prompt-label">Try this prompt in Claude or ChatGPT</div>
+        <button class="prompt-copy" onclick="copyPrompt(this)">Copy prompt</button>
+        <div class="prompt-text">I'm learning bash scripting. Please write a shell script called experiment_setup.sh that does the following:
+
+1. Has a shebang line (#!/bin/bash) and comments explaining what it does
+2. Creates a log file called setup_log.txt
+3. Writes "Experiment setup started: [current date/time]" to the log file
+4. Uses a nested loop to create directories for three species (cubane, ethane, methane) and four temperatures (25, 30, 37, 40)
+5. Inside each temperature directory, creates an empty file called experiment.sh
+6. Logs each directory it creates to the log file
+7. Writes "Setup completed: [current date/time]" to the log at the end
+8. Prints a message to the screen when it finishes
+
+Please explain what each part of the script does.</div>
+      </div>
+
+      <p>Once you have the script from AI, save it as <code>experiment_setup.sh</code>, make it executable with <code>chmod +x experiment_setup.sh</code>, and run it with <code>./experiment_setup.sh</code>. Check the output and the log file.</p>
+
+      <div class="callout tip">
+        <div class="callout-title">The complete script (reference)</div>
+        <p>Here is what the finished script should look like. Compare it to what AI generated for you.</p>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>#!/bin/bash
+# script to set up experimental directory structure
+
+log_file="setup_log.txt"
+
+echo "Experiment setup started: $(date)" > $log_file
+
+for species in cubane ethane methane
+do
+    mkdir $species
+    echo "Created $species directory" >> $log_file
+
+    for temperature in 25 30 37 40
+    do
+        mkdir $species/$temperature
+        touch $species/$temperature/experiment.sh
+        echo "  - Created $species/$temperature/" >> $log_file
+    done
+done
+
+echo "Setup completed: $(date)" >> $log_file
+echo "Setup complete! Check $log_file for details."</code></pre>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">Before Day 4</div>
+      <p>Create a free <a href="https://github.com" target="_blank">GitHub account</a> if you don't have one. We'll use it on Day 4 for remote repositories.</p>
+    </div>
+
+    <div class="page-nav">
+      <a href="day2.html">← Day 2: Files &amp; Directories</a>
+      <a class="next" href="day4.html">Day 4: Git + Intro to R →</a>
+    </div>
+
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>
