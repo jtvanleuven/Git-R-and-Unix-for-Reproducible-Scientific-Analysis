@@ -44,6 +44,12 @@
   <div class="content">
 
     <div class="section">
+      <div class="section-title">Course Description</div>
+      <p><a href="https://software-carpentry.org/" target="_blank">Software Carpentry</a> aims to teach researchers basic concepts, skills, and tools for working with data to get more done in less time, and with less pain. This hands-on workshop introduces the Unix shell, Git version control, and R — the core toolkit for reproducible scientific computing. Topics include navigating the command line, writing shell scripts and loops to automate repetitive tasks, tracking project history with Git and GitHub, and wrangling and visualizing data in R using tidyverse and ggplot2. A key feature of this workshop is integrating AI tools (Claude, ChatGPT) as coding partners: participants learn to write effective prompts, critically evaluate AI-generated code, and iterate toward working solutions.</p>
+      <p>The workshop is aimed at graduate students and researchers but is open to all; no prior programming experience is required. Participants must bring a laptop with a Mac, Linux, or Windows operating system on which they have administrative privileges. For more information, visit <a href="https://imci.uidaho.edu/data-carpentries-training" target="_blank">imci.uidaho.edu/data-carpentries-training</a>.</p>
+    </div>
+
+    <div class="section">
       <div class="section-title">Workshop Schedule</div>
       <div class="day-grid">
         <a class="day-card" href="day1.html">
@@ -86,12 +92,60 @@
     </div>
 
     <div class="section">
+      <div class="section-title">Using AI in This Workshop <span class="badge ai">AI</span></div>
+
+      <h2>How It Works</h2>
+      <p>Each day page contains green <strong>AI Prompt</strong> boxes with pre-written prompts you can copy and paste into Claude.ai, ChatGPT, or Gemini. The AI writes the code — your job is to read it, run it, and iterate when things break.</p>
+      <ul>
+        <li><strong>Read</strong> what the AI produced before running it</li>
+        <li><strong>Run</strong> the code and check the output</li>
+        <li><strong>Iterate</strong> — paste error messages back and ask for a fix</li>
+        <li><strong>Understand</strong> — ask the AI to explain anything you don't follow</li>
+      </ul>
+
+      <h2>Prompt Writing Best Practices</h2>
+      <p>The quality of what the AI gives you depends almost entirely on how well you describe what you want.</p>
+
+      <div class="callout demo">
+        <div class="callout-title">1 · Give context</div>
+        <p>Tell the AI what language or tool you're using and what your goal is. <em>"I'm using bash on macOS and I want to…"</em> is much better than just <em>"write me a script."</em></p>
+      </div>
+
+      <div class="callout demo">
+        <div class="callout-title">2 · Be specific</div>
+        <p>Vague questions get vague answers. Describe exactly what you have and what you want the output to look like. Name your files, variables, and expected results.</p>
+      </div>
+
+      <div class="callout demo">
+        <div class="callout-title">3 · Paste error messages verbatim</div>
+        <p>When something breaks, copy the exact error message — don't paraphrase it. The specific wording is often the key to diagnosing the problem.</p>
+      </div>
+
+      <div class="callout demo">
+        <div class="callout-title">4 · Ask for explanations, not just code</div>
+        <p>Follow up with <em>"Explain what this script does line by line"</em> or <em>"Why does this step need to happen before the next one?"</em> Understanding is the goal, not just having code that runs.</p>
+      </div>
+
+      <div class="callout demo">
+        <div class="callout-title">5 · Iterate in the same conversation</div>
+        <p>Keep the conversation going rather than starting over. <em>"That worked — now modify it to also save a log file"</em> builds on context the AI already has.</p>
+      </div>
+
+      <h2>Free AI Tools</h2>
+      <ul class="link-list">
+        <li><a href="https://claude.ai" target="_blank">claude.ai</a><span class="link-desc">Strong at explaining code and iterating — our top pick for this workshop</span></li>
+        <li><a href="https://chatgpt.com" target="_blank">chatgpt.com</a><span class="link-desc">Widely known, solid support for shell and R</span></li>
+        <li><a href="https://gemini.google.com" target="_blank">gemini.google.com</a><span class="link-desc">Free, works with your Google account</span></li>
+      </ul>
+    </div>
+
+    <div class="section">
       <div class="section-title">Before You Arrive</div>
 
       <h2>Install Required Software</h2>
-      <p>Please install the following before Day 1. Instructions are on each day's page.</p>
+      <p>Please install the following before Day 1. Mac and Linux users have a shell built in; Windows users need one of the options below.</p>
       <ul class="link-list">
-        <li><a href="https://learn.microsoft.com/en-us/windows/wsl/install" target="_blank">WSL (Windows users)</a><span class="link-desc">Windows Subsystem for Linux — required if you're on Windows</span></li>
+        <li><a href="https://learn.microsoft.com/en-us/windows/wsl/install" target="_blank">WSL (Windows users)</a><span class="link-desc">Windows Subsystem for Linux — recommended option for Windows</span></li>
         <li><a href="https://carpentries.github.io/workshop-template/install_instructions/#shell" target="_blank">Git for Windows</a><span class="link-desc">Alternative shell setup for Windows users</span></li>
         <li><a href="https://posit.co/download/rstudio-desktop/" target="_blank">R and RStudio</a><span class="link-desc">Download both — needed starting Day 4</span></li>
       </ul>
@@ -104,36 +158,28 @@
 <span class="kw">wget</span> https://swcarpentry.github.io/shell-novice/data/shell-lesson-data.zip
 <span class="kw">unzip</span> shell-lesson-data.zip</code></pre>
       </div>
-
-      <h2>Free AI Tools We'll Use</h2>
-      <p>Have one of these open in a browser tab during coding sessions.</p>
-      <ul class="link-list">
-        <li><a href="https://claude.ai" target="_blank">claude.ai</a><span class="link-desc">Strong at explaining code and iterating — our top pick for this workshop</span></li>
-        <li><a href="https://chatgpt.com" target="_blank">chatgpt.com</a><span class="link-desc">Widely known, solid support for shell and R</span></li>
-        <li><a href="https://gemini.google.com" target="_blank">gemini.google.com</a><span class="link-desc">Free, works with your Google account</span></li>
-      </ul>
-
-      <h2>Helpful Links</h2>
-      <ul class="link-list">
-        <li><a href="https://swcarpentry.github.io/shell-novice/01-intro.html" target="_blank">Carpentries Shell Novice Lesson</a><span class="link-desc">The official Carpentries materials we follow for Unix</span></li>
-        <li><a href="https://swcarpentry.github.io/r-novice-gapminder/" target="_blank">Carpentries R for Reproducible Research</a><span class="link-desc">The official Carpentries materials we follow for R</span></li>
-        <li><a href="https://evanwill.github.io/get-git-b/" target="_blank">Get Git! (Evan Will)</a><span class="link-desc">Excellent introductory Git guide</span></li>
-        <li><a href="https://uidaho.zoom.us/j/89245204577" target="_blank">Workshop Zoom Link</a><span class="link-desc">Passcode: 121279</span></li>
-        <li><a href="https://imci.uidaho.edu/data-carpentries-training" target="_blank">IMCI Main Page</a><span class="link-desc">University of Idaho IMCI Data Carpentries training</span></li>
-        <li><a href="https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html" target="_blank">Code of Conduct</a><span class="link-desc">The Carpentries community standards</span></li>
-      </ul>
     </div>
 
     <div class="section">
-      <div class="section-title">Prompt Writing Best Practices <span class="badge ai">AI</span></div>
-      <p>You'll use AI throughout this workshop to understand commands, debug errors, and write code. These five rules will make your prompts much more effective:</p>
-      <ol>
-        <li><strong>Give context.</strong> Tell the AI what language/tool you're using and what your goal is. "I'm using bash on macOS and I want to…"</li>
-        <li><strong>Be specific.</strong> Vague questions get vague answers. Describe exactly what you have and what you want.</li>
-        <li><strong>Paste errors verbatim.</strong> Copy the full error message — don't paraphrase it. The exact wording matters.</li>
-        <li><strong>Ask for explanations.</strong> Don't just ask for code — ask the AI to explain what each part does so you learn from it.</li>
-        <li><strong>Iterate in the same conversation.</strong> AI remembers context within a session. Follow up, ask "why?", and refine.</li>
-      </ol>
+      <div class="section-title">Important Links</div>
+      <ul class="link-list">
+        <li><a href="https://swcarpentry.github.io/shell-novice/01-intro.html" target="_blank">Carpentries Shell Novice Lesson</a><span class="link-desc">Official Carpentries materials we follow for Unix</span></li>
+        <li><a href="https://swcarpentry.github.io/r-novice-gapminder/" target="_blank">Carpentries R for Reproducible Research</a><span class="link-desc">Official Carpentries materials we follow for R</span></li>
+        <li><a href="https://evanwill.github.io/get-git-b/" target="_blank">Get Git! (Evan Will)</a><span class="link-desc">Excellent introductory Git guide</span></li>
+        <li><a href="https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html" target="_blank">Code of Conduct</a><span class="link-desc">The Carpentries community standards</span></li>
+        <li><a href="https://uidaho.zoom.us/j/89245204577" target="_blank">Workshop Zoom Link</a><span class="link-desc">Passcode: 121279</span></li>
+        <li><a href="https://imci.uidaho.edu/data-carpentries-training" target="_blank">IMCI Data Carpentries Training</a><span class="link-desc">University of Idaho IMCI workshop page</span></li>
+      </ul>
+
+      <h2>Feedback &amp; Surveys</h2>
+      <ul class="link-list">
+        <li><a href="#" target="_blank">Pre-Workshop Survey</a></li>
+        <li><a href="#" target="_blank">Day 1 Feedback</a></li>
+        <li><a href="#" target="_blank">Day 2 Feedback</a></li>
+        <li><a href="#" target="_blank">Day 3 Feedback</a></li>
+        <li><a href="#" target="_blank">Day 4 Feedback</a></li>
+        <li><a href="#" target="_blank">Post-Workshop Survey</a></li>
+      </ul>
     </div>
 
   </div>
