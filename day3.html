@@ -143,29 +143,6 @@ for alkanes in *.pdb; do cat $alkanes > alkanes.pdb; done
 for datafile in *.pdb; do cat $datafile >> all.pdb; done</code></pre>
       </div>
 
-      <h2>Nested Loops Challenge</h2>
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-        <pre><code><span class="cm"># Create a directory structure for experiments</span>
-for species in cubane ethane methane
-do
-  for temperature in 25 30 37 40
-  do
-    mkdir $species-$temperature
-  done
-done
-
-<span class="cm"># Add a script file to each temperature directory</span>
-for species in octane pentane propane
-do
-  mkdir $species
-  for temperature in 25 30 37 40
-  do
-    mkdir $species/$temperature
-    touch $species/$temperature/experiment.sh
-  done
-done</code></pre>
-      </div>
     </div>
 
     <div class="section">
@@ -289,9 +266,46 @@ echo "Setup complete! Check $log_file for details."</code></pre>
       </div>
     </div>
 
-    <div class="callout tip">
-      <div class="callout-title">Before Day 4</div>
+    <div class="section">
+      <div class="section-title">Before Day 4</div>
+
+      <h2>Set Up a GitHub Account</h2>
       <p>Create a free <a href="https://github.com" target="_blank">GitHub account</a> if you don't have one. We'll use it on Day 4 for remote repositories.</p>
+
+      <h2>AI Tools for This Workshop</h2>
+      <p>We'll be using AI tools throughout the rest of the workshop. Get set up before Day 4:</p>
+      <ul class="link-list">
+        <li><a href="https://chat.uidaho.edu/" target="_blank">chat.uidaho.edu</a><span class="link-desc">University of Idaho AI chatbot — no account setup needed for UI members</span></li>
+        <li><a href="https://mindrouter.uidaho.edu/" target="_blank">mindrouter.uidaho.edu</a><span class="link-desc">UI's own LLM inference cluster — 60+ open-source models, free for UI users, OpenAI-compatible API</span></li>
+        <li><a href="https://goose-docs.ai/" target="_blank">goose-docs.ai</a><span class="link-desc">Goose — open-source AI coding agent that runs locally, reads/writes files, and works in your terminal</span></li>
+      </ul>
+
+      <h2>Install and Configure Goose</h2>
+      <p>Goose is an AI agent that runs on your laptop and can write, edit, and run code directly in your terminal. Here's how to connect it to MindRouter, U of I's free LLM cluster.</p>
+
+      <div class="callout demo">
+        <div class="callout-title">Step 1 · Download and install Goose</div>
+        <p>Go to <a href="https://goose-docs.ai/" target="_blank">goose-docs.ai</a> and download the installer for your operating system. Run it and follow the prompts.</p>
+      </div>
+
+      <div class="callout demo">
+        <div class="callout-title">Step 2 · Get a MindRouter API key</div>
+        <p>Go to <a href="https://mindrouter.uidaho.edu/" target="_blank">mindrouter.uidaho.edu</a>, log in with your UI credentials, and generate an API key from your Dashboard.</p>
+      </div>
+
+      <div class="callout demo">
+        <div class="callout-title">Step 3 · Add MindRouter as a provider in Goose</div>
+        <p>Open Goose → <strong>Settings</strong> → <strong>Add Provider</strong> → <strong>Configure Manually</strong> and fill in the following:</p>
+        <ul style="margin-top:8px;">
+          <li><strong>Provider Type:</strong> OpenAI Compatible</li>
+          <li><strong>Display Name:</strong> Mindrouter (or whatever you like)</li>
+          <li><strong>API URL:</strong> <code>https://mindrouter.uidaho.edu</code></li>
+          <li><strong>API Base Path:</strong> leave blank</li>
+          <li><strong>Authentication:</strong> ✓ This provider requires an API key</li>
+          <li><strong>API Key:</strong> paste the key you generated in Step 2</li>
+          <li><strong>Available Models:</strong> <code>default-coder, default-vision, openai/gpt-oss-120b, openai/gpt-oss-20b, qwen/qwen3.8-27b</code></li>
+        </ul>
+      </div>
     </div>
 
     <div class="page-nav">
