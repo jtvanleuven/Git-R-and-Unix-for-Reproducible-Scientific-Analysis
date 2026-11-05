@@ -42,6 +42,38 @@
   <div class="content">
 
     <div class="section">
+      <div class="section-title">Why Unix Still Matters</div>
+      <p>AI tools can write code, but they can't replace the command line for working with real biological data at scale. Here's a quick demonstration: we'll download the entire <a href="https://www.uniprot.org/help/uniprotkb_sections" target="_blank">Swiss-Prot database</a> — every manually reviewed protein sequence known to science — and explore it with three commands.</p>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># Download Swiss-Prot (~100 MB compressed, ~250 MB uncompressed)</span>
+$ curl -L -O "https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz"
+$ gunzip uniprot_sprot.fasta.gz</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># How many protein sequences are in the entire database?</span>
+$ grep -c "^>" uniprot_sprot.fasta
+
+<span class="cm"># What does a header look like?</span>
+$ grep "^>" uniprot_sprot.fasta | head -n 5
+
+<span class="cm"># How many are from E. coli?</span>
+$ grep "^>" uniprot_sprot.fasta | grep "ECOLI" | wc -l
+
+<span class="cm"># How many are human?</span>
+$ grep "^>" uniprot_sprot.fasta | grep "HUMAN" | wc -l</code></pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-title">What just happened?</div>
+        <p>You searched ~570,000 protein sequences in seconds using tools built into every Unix system. No software to install, no GUI to open, no license to pay for. This is why bioinformatics runs on the command line.</p>
+      </div>
+    </div>
+
+    <div class="section">
       <div class="section-title">Day 1 Review</div>
       <ul>
         <li><code>pwd</code> — print working directory</li>
