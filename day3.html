@@ -66,14 +66,11 @@
       <h2>The Problem: Repeating a Command</h2>
       <div class="code-block">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-        <pre><code>$ head -n 5 basilisk.dat minotaur.dat unicorn.dat
-<span class="cm"># Works, but what if you had 100 files?</span>
+        <pre><code>$ head -n 5 *.dat       <span class="cm"># wildcards work for simple cases</span>
 
-$ head -n 5 *.dat       <span class="cm"># wildcard helps, but...</span>
-
-<span class="cm"># What if you wanted only the CLASSIFICATION line from each?</span>
-$ head -n 2 basilisk.dat minotaur.dat unicorn.dat | tail -n 1
-<span class="cm"># Oops — only gets unicorn! This is why we need loops.</span></code></pre>
+<span class="cm"># But what if you need to do something WITH each filename?</span>
+<span class="cm"># For example: print the filename, then its classification line, then a separator</span>
+<span class="cm"># Wildcards can't do that — you need a loop.</span></code></pre>
       </div>
 
       <h2>Your First Loop</h2>
