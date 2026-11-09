@@ -114,16 +114,16 @@ $ git status                               <span class="cm"># working directory 
       <div class="section-title">Viewing History and Reverting</div>
       <div class="code-block">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-        <pre><code>$ nano sorted.sh          <span class="cm"># deliberately mess up the script</span>
+        <pre><code>$ nano notes.txt          <span class="cm"># deliberately mess up the file</span>
 $ git add -A
-$ git commit -m "added function to sorted.sh"
+$ git commit -m "updated notes"
 
-<span class="cm"># Oh no — the script is broken. Revert it.</span>
-$ git checkout HEAD~1 sorted.sh   <span class="cm"># restore previous version</span>
-$ less sorted.sh
+<span class="cm"># Oh no — we made a mistake. Revert to the previous version.</span>
+$ git checkout HEAD~1 notes.txt   <span class="cm"># restore previous version</span>
+$ less notes.txt
 $ git status
 $ git add -A
-$ git commit -m "revert to old sorted.sh"
+$ git commit -m "revert notes to previous version"
 $ git log --oneline               <span class="cm"># see compact history</span></code></pre>
       </div>
     </div>
@@ -157,29 +157,26 @@ $ git commit -m "remove .pdb files from tracking"</code></pre>
       <div class="section-title">git diff and Remote Repos</div>
       <div class="code-block">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-        <pre><code>$ nano sorted.sh       <span class="cm"># make a change</span>
-$ git diff             <span class="cm"># see exactly what changed</span>
-$ git add sorted.sh
-$ git commit -m "updated sorted.sh"
+        <pre><code>$ nano notes.txt       <span class="cm"># make a change</span>
+$ git diff             <span class="cm"># see exactly what changed before staging</span>
+$ git add notes.txt
+$ git commit -m "updated notes"
 $ git log --oneline</code></pre>
       </div>
 
       <h2>Connecting to GitHub</h2>
       <ol>
-        <li>Go to <a href="https://github.com" target="_blank">github.com</a> and create a new repository called <code>creatures_github</code></li>
-        <li>Edit the README in the browser and commit — this initializes the remote repo</li>
-        <li>Clone it to your Desktop</li>
+        <li>Go to <a href="https://github.com" target="_blank">github.com</a> and create a new empty repository (no README)</li>
+        <li>Copy the SSH remote URL from GitHub</li>
+        <li>Link your local <code>shell-lesson-data</code> repo to it and push</li>
       </ol>
       <div class="code-block">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-        <pre><code>$ cd ~/Desktop
-$ git clone [repo SSH link]
-$ cd creatures_github
-$ cp ../example-repo/*.sh .
-$ git pull                          <span class="cm"># always pull before pushing</span>
-$ git add -A
-$ git commit -m "added shell scripts to repo"
-$ git push</code></pre>
+        <pre><code>$ cd ~/Desktop/shell-lesson-data
+$ git remote add origin [repo SSH link]  <span class="cm"># connect local repo to GitHub</span>
+$ git remote -v                          <span class="cm"># verify the connection</span>
+$ git pull                               <span class="cm"># always pull before pushing</span>
+$ git push -u origin main                <span class="cm"># push and set tracking branch</span></code></pre>
       </div>
 
       <ul class="link-list">
