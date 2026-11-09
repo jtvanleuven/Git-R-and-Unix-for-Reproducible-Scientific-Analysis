@@ -68,13 +68,12 @@ $ git config --list      <span class="cm"># verify your settings</span></code></
       </div>
 
       <h2>Create a Local Repository</h2>
+      <p>We'll use the <code>shell-lesson-data</code> directory from Days 1–3 as our git repo — it already has real files in it, which makes for a more interesting history.</p>
       <div class="code-block">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-        <pre><code>$ cd ~/Desktop
-$ mkdir example-repo
-$ cd example-repo
-$ git init            <span class="cm"># initialize a new repo</span>
-$ ls -la              <span class="cm"># notice the hidden .git folder</span>
+        <pre><code>$ cd ~/Desktop/shell-lesson-data
+$ git init            <span class="cm"># initialize a new repo — creates a hidden .git folder</span>
+$ ls -la              <span class="cm"># notice the .git folder</span>
 $ git status          <span class="cm"># always a safe first command</span></code></pre>
       </div>
       <div class="callout warn">
@@ -90,25 +89,19 @@ $ git status          <span class="cm"># always a safe first command</span></cod
       <div class="code-block">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
         <pre><code>git status           <span class="cm"># check what's changed</span>
-git pull             <span class="cm"># get latest changes from remote (when applicable)</span>
 git add file.txt     <span class="cm"># stage a file (or: git add -A for everything)</span>
-git commit -m "message"   <span class="cm"># save to the repository with a message</span>
-git push             <span class="cm"># send to remote (GitHub)</span></code></pre>
+git commit -m "message"   <span class="cm"># save to the repository with a message</span></code></pre>
       </div>
 
       <h2>Add and Commit Files</h2>
       <div class="code-block">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-        <pre><code>$ cp ~/Desktop/shell-lesson-data/exercise-data/alkanes/middle.sh .
-$ cp ~/Desktop/shell-lesson-data/exercise-data/alkanes/*.pdb .
-$ cp ~/Desktop/shell-lesson-data/exercise-data/alkanes/sorted.sh .
-
-$ git status
-$ git add -A
-$ git status
-$ git commit -m "added first scripts and data files"
-$ touch another_file.txt
-$ git status</code></pre>
+        <pre><code>$ echo "we are learning git" > notes.txt   <span class="cm"># create a new file</span>
+$ git status                               <span class="cm"># notes.txt shows as "untracked"</span>
+$ git add notes.txt                        <span class="cm"># move it to the staging area</span>
+$ git status                               <span class="cm"># now it shows as "changes to be committed"</span>
+$ git commit -m "added notes"             <span class="cm"># save a snapshot to the repository</span>
+$ git status                               <span class="cm"># working directory is clean again</span></code></pre>
       </div>
 
       <div class="callout demo">
