@@ -80,6 +80,23 @@ $ git status          <span class="cm"># always a safe first command</span></cod
         <div class="callout-title">Don't nest repos</div>
         <p>Never run <code>git init</code> inside a directory that's already a git repository. This causes confusing problems.</p>
       </div>
+
+      <h2>Create a .gitignore First</h2>
+      <p>Before adding any files, tell git what to ignore. Large files like the Swiss-Prot database will break your push to GitHub if you accidentally commit them.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ nano .gitignore</code></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>uniprot/</code></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ git status          <span class="cm"># uniprot/ should not appear as untracked</span>
+$ git add .gitignore
+$ git commit -m "add .gitignore"</code></pre>
+      </div>
     </div>
 
     <div class="section">
@@ -127,32 +144,6 @@ $ git commit -m "revert sorted.sh to previous version"</code></pre>
     </div>
 
     <div class="section">
-      <div class="section-title">.gitignore</div>
-      <p>Not everything should be tracked. Large data files, binary outputs, and temporary files waste space and slow down your repo.</p>
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-        <pre><code>$ nano .gitignore</code></pre>
-      </div>
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-        <pre><code>uniprot/</code></pre>
-      </div>
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-        <pre><code>$ git status
-$ git add -A
-$ git commit -m "add .gitignore"
-<span class="cm"># If you already committed the uniprot directory, untrack it:</span>
-$ git rm --cached uniprot/uniprot_sprot.fasta   <span class="cm"># untrack without deleting the file</span>
-$ git commit -m "untrack uniprot fasta"</code></pre>
-      </div>
-      <div class="callout tip">
-        <div class="callout-title">Best practice</div>
-        <p>Create your <code>.gitignore</code> before you start adding files. It's much harder to untrack files after the fact.</p>
-      </div>
-    </div>
-
-    <div class="section">
       <div class="section-title">git diff and Remote Repos</div>
       <div class="code-block">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
@@ -167,7 +158,8 @@ $ git log --oneline</code></pre>
       <ol>
         <li>Go to <a href="https://github.com" target="_blank">github.com</a> → New repository</li>
         <li>Name it <code>shell-lesson-data</code> — leave it completely empty (no README, no .gitignore)</li>
-        <li>Copy the HTTPS or SSH remote URL</li>
+        <li>Copy the HTTPS remote URL</li>
+        <li>Generate a personal access token: <strong>Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token</strong> — check the <strong>repo</strong> scope. Copy it — it only shows once.</li>
       </ol>
       <div class="code-block">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
