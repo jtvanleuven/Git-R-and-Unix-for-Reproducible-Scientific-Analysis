@@ -165,17 +165,16 @@ $ git log --oneline</code></pre>
 
       <h2>Connecting to GitHub</h2>
       <ol>
-        <li>Go to <a href="https://github.com" target="_blank">github.com</a> and create a new empty repository (no README)</li>
-        <li>Copy the SSH remote URL from GitHub</li>
-        <li>Link your local <code>shell-lesson-data</code> repo to it and push</li>
+        <li>Go to <a href="https://github.com" target="_blank">github.com</a> → New repository</li>
+        <li>Name it <code>shell-lesson-data</code> — leave it completely empty (no README, no .gitignore)</li>
+        <li>Copy the HTTPS or SSH remote URL</li>
       </ol>
       <div class="code-block">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
         <pre><code>$ cd ~/Desktop/shell-lesson-data
-$ git remote add origin [repo SSH link]  <span class="cm"># connect local repo to GitHub</span>
+$ git remote add origin [repo URL]       <span class="cm"># connect local repo to GitHub</span>
 $ git remote -v                          <span class="cm"># verify the connection</span>
-$ git pull                               <span class="cm"># always pull before pushing</span>
-$ git push -u origin master              <span class="cm"># push and set tracking branch</span></code></pre>
+$ git push -u origin master              <span class="cm"># push to GitHub</span></code></pre>
       </div>
 
       <ul class="link-list">
