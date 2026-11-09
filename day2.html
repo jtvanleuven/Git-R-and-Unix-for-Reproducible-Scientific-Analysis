@@ -48,23 +48,26 @@
       <div class="code-block">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
         <pre><code><span class="cm"># Download Swiss-Prot (~100 MB compressed, ~250 MB uncompressed)</span>
+$ mkdir uniprot
+$ cd uniprot
 $ curl -L -O "https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz"
-$ gunzip uniprot_sprot.fasta.gz</code></pre>
+$ gunzip uniprot_sprot.fasta.gz
+$ cd ..</code></pre>
       </div>
 
       <div class="code-block">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
         <pre><code><span class="cm"># How many protein sequences are in the entire database?</span>
-$ grep -c "^>" uniprot_sprot.fasta
+$ grep -c "^>" uniprot/uniprot_sprot.fasta
 
 <span class="cm"># What does a header look like?</span>
-$ grep "^>" uniprot_sprot.fasta | head -n 5
+$ grep "^>" uniprot/uniprot_sprot.fasta | head -n 5
 
 <span class="cm"># How many are from E. coli?</span>
-$ grep "^>" uniprot_sprot.fasta | grep "ECOLI" | wc -l
+$ grep "^>" uniprot/uniprot_sprot.fasta | grep "ECOLI" | wc -l
 
 <span class="cm"># How many are human?</span>
-$ grep "^>" uniprot_sprot.fasta | grep "HUMAN" | wc -l</code></pre>
+$ grep "^>" uniprot/uniprot_sprot.fasta | grep "HUMAN" | wc -l</code></pre>
       </div>
 
       <div class="callout tip">
