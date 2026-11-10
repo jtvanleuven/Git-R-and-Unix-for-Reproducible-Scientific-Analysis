@@ -86,20 +86,6 @@ gap<span class="op">$</span>big_countries <span class="op">&lt;-</span> gap<span
         <li><strong>Factor</strong> — categorical data with defined levels</li>
       </ul>
 
-      <h2>Vectorization Is Faster Than Loops</h2>
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-        <pre><code><span class="cm"># Vectorized — fast</span>
-<span class="fn">system.time</span>(gap<span class="op">$</span>pop <span class="op">-</span> <span class="nm">1000</span>)
-
-<span class="cm"># Loop — slow</span>
-<span class="fn">system.time</span>(
-  <span class="kw">for</span>(i <span class="kw">in</span> <span class="nm">1</span><span class="op">:</span><span class="fn">nrow</span>(gap)) {
-    <span class="fn">print</span>(gap[i,]<span class="op">$</span>pop <span class="op">-</span> <span class="nm">1000</span>)
-  }
-)</code></pre>
-      </div>
-
       <h2>Working with Vectors and Data Frames</h2>
       <div class="code-block">
         <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
@@ -112,20 +98,6 @@ cats <span class="op">&lt;-</span> <span class="fn">data.frame</span>(coat <span
 
 <span class="cm"># Vectorization on character vectors</span>
 <span class="fn">paste</span>(<span class="st">"My cat is"</span>, cats<span class="op">$</span>coat)</code></pre>
-      </div>
-
-      <h2>Type Coercion — Watch Out</h2>
-      <p>R will silently convert types when you mix them. The hierarchy: <code>logical → integer → double → complex → character</code></p>
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">R</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-        <pre><code>coercion_vector <span class="op">&lt;-</span> <span class="fn">c</span>(<span class="nm">0</span>, <span class="kw">TRUE</span>)    <span class="cm"># what do you predict?</span>
-coercion_vector
-
-<span class="cm"># Explicit type conversion</span>
-coercion_vector <span class="op">&lt;-</span> <span class="fn">c</span>(<span class="st">'0'</span>, <span class="st">'2'</span>, <span class="st">'4'</span>)
-<span class="fn">str</span>(coercion_vector)
-coercion_vector <span class="op">&lt;-</span> <span class="fn">as.numeric</span>(coercion_vector)
-<span class="fn">str</span>(coercion_vector)</code></pre>
       </div>
 
       <h2>Lists</h2>
@@ -185,50 +157,39 @@ gap_smaller <span class="op">&lt;-</span> gap <span class="op">%&gt;%</span>
 <span class="cm"># Filter rows</span>
 tidyGap <span class="op">&lt;-</span> gap <span class="op">%&gt;%</span>
   <span class="fn">select</span>(year, country, pop, gdpPercap) <span class="op">%&gt;%</span>
-  <span class="fn">filter</span>(<span class="fn">between</span>(year, <span class="nm">1970</span>, <span class="nm">1990</span>)) <span class="op">%&gt;%</span>
-  <span class="fn">rename</span>(population <span class="op">=</span> pop)
-
-<span class="cm"># Summarize by group</span>
-gdp_bycontinents <span class="op">&lt;-</span> gap <span class="op">%&gt;%</span>
-  <span class="fn">group_by</span>(continent) <span class="op">%&gt;%</span>
-  <span class="fn">summarize</span>(mean_gdpPercap <span class="op">=</span> <span class="fn">mean</span>(gdpPercap))
-
-<span class="cm"># Multi-variable summary</span>
-gdp_pop_bycontinents_byyear <span class="op">&lt;-</span> gap <span class="op">%&gt;%</span>
-  <span class="fn">group_by</span>(continent, year) <span class="op">%&gt;%</span>
-  <span class="fn">summarize</span>(mean_gdpPercap <span class="op">=</span> <span class="fn">mean</span>(gdpPercap),
-            sd_gdpPercap <span class="op">=</span> <span class="fn">sd</span>(gdpPercap),
-            mean_pop <span class="op">=</span> <span class="fn">mean</span>(pop),
-            sd_pop <span class="op">=</span> <span class="fn">sd</span>(pop),
-            countriesInContinent <span class="op">=</span> <span class="fn">n</span>())
-
-<span class="cm"># Mutate — add a new column</span>
-gap <span class="op">%&gt;%</span>
-  <span class="fn">mutate</span>(gdp_billion <span class="op">=</span> pop <span class="op">*</span> gdpPercap <span class="op">/</span> <span class="nm">10</span><span class="op">^</span><span class="nm">9</span>)</code></pre>
-      </div>
-      <div class="callout demo">
-        <div class="callout-title">Practice problem</div>
-        <p>Calculate the mean life expectancy per country. Which country has the longest average life expectancy? The shortest?</p>
+  <span class="fn">filter</span>(<span class="fn">between</span>(year, <span class="nm">1970</span>, <span class="nm">1990</span>))</code></pre>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-title">Ask AI to Write a dplyr Pipeline <span class="badge ai">AI</span></div>
-      <p>dplyr is where AI really shines — describe what you want in plain English and let AI write the pipeline. Then run it and make sure the output makes sense.</p>
-      <div class="prompt-box">
-        <div class="prompt-label">Try this prompt in Claude or ChatGPT</div>
-        <button class="prompt-copy" onclick="copyPrompt(this)">Copy prompt</button>
-        <div class="prompt-text">I'm working with the gapminder dataset in R. It has columns: country, continent, year, lifeExp, pop, gdpPercap. I have it loaded as a data frame called "gap".
+      <div class="section-title">Build a Data Explorer with Goose <span class="badge ai">AI</span></div>
+      <p>Now we'll hand off to AI. Open Goose and ask it to generate a self-contained HTML file that lets you interactively explore the gapminder dataset. The goal is a working tool — you'll prompt, run it in a browser, and iterate from there.</p>
 
-Please write a dplyr pipeline that:
-1. Filters to only include data from 1990 onwards
-2. Groups by continent and year
-3. Calculates the mean life expectancy and total population for each group
-4. Arranges the results by continent and year
-
-Please use the tidyverse %>% pipe and explain what each step does.</div>
+      <div class="callout demo">
+        <div class="callout-title">Goose prompt — gapminder explorer</div>
+        <p>Give Goose the data file and this prompt. Keep it simple — you can always refine it after seeing what it produces.</p>
       </div>
-      <p>After running it, follow up: "Can you modify this to also calculate the standard deviation of life expectancy for each group?"</p>
+
+      <div class="prompt-box">
+        <div class="prompt-label">Paste into Goose</div>
+        <button class="prompt-copy" onclick="copyPrompt(this)">Copy prompt</button>
+        <div class="prompt-text">I have a CSV file called gapminder.csv with columns: country, continent, year, lifeExp, pop, gdpPercap.
+
+Create a self-contained HTML file called gapminder_explorer.html that lets me interactively explore this data. Include filters for continent and year, and display a summary table of the filtered results. Load the data directly from the CSV file.</div>
+      </div>
+
+      <p>Once Goose generates the file, open it in a browser and see what it made. Then iterate — ask it to add a chart, change the layout, or add a new filter.</p>
+
+      <h2>Push to GitHub and Publish as a Live Page</h2>
+      <p>Once you're happy with the explorer, push the R project to GitHub and turn on GitHub Pages so the HTML file is live at a URL you can share.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code><span class="cm"># From your R project directory</span>
+$ git add -A
+$ git commit -m "add gapminder explorer"
+$ git push -u origin master</code></pre>
+      </div>
+      <p>Then on GitHub: <strong>Settings → Pages → Branch: master → / (root) → Save</strong>. Your explorer will be live at <code>https://[username].github.io/[repo-name]/gapminder_explorer.html</code></p>
     </div>
 
     <div class="page-nav">
