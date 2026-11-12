@@ -245,6 +245,60 @@ $ git push -u origin master</code></pre>
     </div>
 
     <div class="section">
+      <div class="section-title">Branching and Collaborating</div>
+      <p>Everyone in the class now has a live gapminder explorer. Let's use that to learn branching and collaboration — the core of how teams use Git.</p>
+
+      <h2>Branching — Experiment Without Breaking Things</h2>
+      <p>A branch lets you try something new while keeping your working version safe. If you like the result, merge it in. If not, delete the branch.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ git branch new-feature        <span class="cm"># create a new branch</span>
+$ git checkout new-feature      <span class="cm"># switch to it</span>
+$ git branch                    <span class="cm"># confirm which branch you're on</span></code></pre>
+      </div>
+      <p>Now ask Goose to modify your explorer — add a new chart, change the layout, try a dark theme. Commit the result on this branch:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ git add -A
+$ git commit -m "trying new feature"
+
+$ git checkout master           <span class="cm"># switch back — your original is untouched</span>
+$ git merge new-feature         <span class="cm"># bring the changes in if you like them</span>
+$ git branch -d new-feature     <span class="cm"># clean up the branch</span>
+$ git push</code></pre>
+      </div>
+
+      <h2>Forking and Pull Requests — Collaborate on Someone Else's Repo</h2>
+      <p>Find a classmate's repo on GitHub. You'll fork it, improve their explorer on a branch, and open a pull request for them to review.</p>
+      <ol>
+        <li><strong>Fork</strong> — click Fork on their GitHub repo. This creates your own copy.</li>
+        <li><strong>Clone</strong> your fork to your Desktop</li>
+        <li><strong>Branch</strong> — create a branch for your improvement</li>
+        <li><strong>Edit</strong> — ask Goose to improve their explorer</li>
+        <li><strong>Push</strong> your branch to your fork</li>
+        <li><strong>Pull request</strong> — click "Compare &amp; pull request" on GitHub to propose your changes to the original repo</li>
+      </ol>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cd ~/Desktop
+$ git clone [URL of your fork]
+$ cd [repo-name]
+$ git checkout -b my-improvement    <span class="cm"># create and switch to a branch in one step</span>
+
+<span class="cm"># ... ask Goose to make an improvement ...</span>
+
+$ git add -A
+$ git commit -m "improved chart colors"
+$ git push -u origin my-improvement</code></pre>
+      </div>
+      <p>Then go to your fork on GitHub — you'll see a prompt to open a pull request. The repo owner can review it and merge it with one click.</p>
+      <div class="callout demo">
+        <div class="callout-title">Class exercise</div>
+        <p>Fork a classmate's repo, improve their gapminder explorer using Goose, and open a pull request. Then check your own repo for incoming pull requests and merge one.</p>
+      </div>
+    </div>
+
+    <div class="section">
       <div class="section-title">Part 2: Intro to R</div>
       <p>Install R and RStudio if you haven't yet — see the link at the top of this page.</p>
 
