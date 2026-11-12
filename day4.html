@@ -207,6 +207,44 @@ I'm using Git on the command line and I'm trying to [describe what you were doin
     </div>
 
     <div class="section">
+      <div class="section-title">Build and Publish a Data Explorer with Goose <span class="badge ai">AI</span></div>
+      <p>Before we write any R, let's see what AI can build on its own. We'll prompt Goose to generate a self-contained HTML data explorer for the gapminder dataset, then publish it as a live GitHub Pages site.</p>
+
+      <h2>Step 1 — Prompt Goose</h2>
+      <p>Open Goose. Use the prompt below. The goal is a single HTML file that loads the gapminder data and lets you filter and explore it in a browser — no R required.</p>
+      <div class="prompt-box">
+        <div class="prompt-label">Paste into Goose</div>
+        <button class="prompt-copy" onclick="copyPrompt(this)">Copy prompt</button>
+        <div class="prompt-text">Create a self-contained HTML file called gapminder_explorer.html that loads the gapminder dataset from this URL:
+
+https://swcarpentry.github.io/r-novice-gapminder/data/gapminder_data.csv
+
+The file should let the user filter by continent and year, display a summary table of the filtered data, and include at least one chart. Everything should work by opening the file in a browser — no server required.</div>
+      </div>
+
+      <h2>Step 2 — Commit and Push</h2>
+      <p>Once Goose generates the file, save it into your <code>shell-lesson-data</code> repo and push it to GitHub.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code>$ cd ~/Desktop/shell-lesson-data
+$ git add -A
+$ git commit -m "add gapminder explorer"
+$ git push -u origin master</code></pre>
+      </div>
+
+      <h2>Step 3 — Enable GitHub Pages</h2>
+      <ol>
+        <li>Go to your repo on GitHub</li>
+        <li><strong>Settings → Pages → Branch: master → / (root) → Save</strong></li>
+        <li>Wait 1–2 minutes, then visit:<br><code>https://[your-username].github.io/[repo-name]/gapminder_explorer.html</code></li>
+      </ol>
+      <div class="callout tip">
+        <div class="callout-title">What just happened?</div>
+        <p>You used an AI agent to build a working web application, tracked it with version control, and deployed it to the web — in one session. This is the workflow we'll keep building on.</p>
+      </div>
+    </div>
+
+    <div class="section">
       <div class="section-title">Part 2: Intro to R</div>
       <p>Install R and RStudio if you haven't yet — see the link at the top of this page.</p>
 
